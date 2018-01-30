@@ -6,7 +6,7 @@ from common import robotMap
 class PhysicsEngine:
   
     def __init__(self, controller):
-        pass
+        self.controller = controller
 
     """
         Keyword arguments:

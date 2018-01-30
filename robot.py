@@ -1,8 +1,6 @@
 import wpilib
 from commandbased import CommandBasedRobot
 
-
-
 class MyRobot(CommandBasedRobot):
     def robotInit(self):
         CommandBasedRobot.robotInit(self)
