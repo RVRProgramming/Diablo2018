@@ -21,6 +21,14 @@ class OI:
         else:
             return robotMap.maxDriveSpeed
 
+    def getGrabberOpen(self):
+        return self.joystick.getRawButton(robotMap.grabberOpen)
+    
+    def getGrabberClose(self):
+        return self.joystick.getRawButton(robotMap.grabberClose)
+    
+    def getElevatorSpeed(self):
+        return self.joystick.getRawAxis(robotMap.elevatorStick) * robotMap.elevatorMaxSpeed
             
 oi = OI()
     
