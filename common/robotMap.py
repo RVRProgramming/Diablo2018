@@ -10,21 +10,21 @@ l2 = 3
 
 leftDriveStick = 1
 rightDriveStick = 5
-slowDriveButton = PLACEHOLDER
+slowDriveButton = 6
 
 maxDriveSpeed = 1
 slowDriveSpeed = 0.75
 
 grabberSpeed = 1
 
-grabberOpen = PLACEHOLDER
-grabberClose = PLACEHOLDER
+grabberOpen = 2
+grabberClose = 1
 
-leftArmMotor = PLACEHOLDER
-rightArmMotor = PLACEHOLDER
+leftArmMotor = 1 #This is a PLACEHOLDER
+rightArmMotor = 2 #This is a PLACEHOLDER
 
-elevatorStick = PLACEHOLDER
+elevatorStick = 1
 
-elevatorMotor = PLACEHOLDER
+elevatorMotor = 3 #This is a PLACEHOLDER
 
 elevatorMaxSpeed = 1
