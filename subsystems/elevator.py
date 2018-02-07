@@ -8,10 +8,11 @@ class Elevator(Subsystem):
     
     def __init__(self):
         super().__init__()
-        self.elevatorMotor = wpilib.VictorSP(robotMap.elevatorMotor)
+        self.elevatorMotor1 = wpilib.VictorSP(robotMap.elevatorMotor1)
+        self.elevatorMotor2 = wpilib.VictorSP(robotMap.elevatorMotor2)
         
     def elevate(self, speed):
-        self.elevatorMotor.set(speed)
-
+        self.elevatorMotor1.set(speed)
+        self.elevatorMotor2.set(speed)
 
 elevator = Elevator()

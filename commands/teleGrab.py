@@ -12,7 +12,7 @@ class TeleGrab(Command):
         self.requires(grabber)
         
     def execute(self):
-        if oi.getGrabberOpen() and not oi.getGrabberClose:
+        if oi.getGrabberOpen() and not oi.getGrabberClose():
             grabber.grab(robotMap.grabberSpeed)
         elif oi.getGrabberClose() and not oi.getGrabberOpen():
             grabber.grab(-robotMap.grabberSpeed)

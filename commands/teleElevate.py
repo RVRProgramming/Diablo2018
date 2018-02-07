@@ -11,7 +11,7 @@ class TeleElevate(Command):
         self.requires(elevator)
         
     def execute(self):
-        elevator.elevate(oi.getElevatorSpeed)
+        elevator.elevate(oi.getElevatorSpeed())
                 
     def isFinished(self):
         return False

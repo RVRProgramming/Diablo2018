@@ -25,6 +25,7 @@ rightArmMotor = 2 #This is a PLACEHOLDER
 
 elevatorStick = 1
 
-elevatorMotor = 3 #This is a PLACEHOLDER
+elevatorMotor1 = 3 #This is a PLACEHOLDER
+elevatorMotor2 = 4 #This is a PLACEHOLDER
 
 elevatorMaxSpeed = 1
