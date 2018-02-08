@@ -21,7 +21,7 @@ class DriveBase(Subsystem):
         
         self.l2.follow(self.l1)
         self.r2.follow(self.r1)
-        """
+        
         self.l1.configPeakCurrentLimit(40, 10)
         self.l1.configPeakCurrentDuration(10000, 10)
         self.l1.configContinuousCurrentLimit(35, 10)
@@ -40,7 +40,7 @@ class DriveBase(Subsystem):
         self.r2.configPeakCurrentLimit(40, 10)
         self.r2.configPeakCurrentDuration(10000, 10)
         self.r2.configContinuousCurrentLimit(35, 10)
-        self.r2.enableCurrentLimit(True)"""
+        self.r2.enableCurrentLimit(True)
         
     def drive(self, leftSpeed, rightSpeed):
         self.l1.set(leftSpeed)
