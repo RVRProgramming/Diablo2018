@@ -1,5 +1,5 @@
+from hal_impl.data import hal_data
 from pyfrc.physics.drivetrains import four_motor_drivetrain
-from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
 
@@ -12,8 +12,8 @@ class PhysicsEngine:
         self.controller.add_device_gyro_channel('navxmxp_spi_4_angle')        
         
         # Zero out encoders.
-        self.leftEncoder = 0
-        self.rightEncoder = 0
+        #hal_data['CAN'][robotMap.left1]['quad_position'] = 0
+        #hal_data['CAN'][robotMap.right1]['quad_position'] = 0
         
     """
         Keyword arguments:
@@ -25,8 +25,8 @@ class PhysicsEngine:
     def update_sim(self, hal_data, now, tm_diff):
 
         # Simulate the drivetrain motors.
-        lf_motor = hal_data['CAN'][robotMap.left1]['value'] / 5
-        lr_motor = hal_data['CAN'][robotMap.left2]['value'] / 5
+        lf_motor = hal_data['CAN'][robotMap.left1]['value'] / -5
+        lr_motor = hal_data['CAN'][robotMap.left2]['value'] / -5
         rf_motor = hal_data['CAN'][robotMap.right1]['value'] / 5
         rr_motor = hal_data['CAN'][robotMap.right2]['value'] / 5
 
@@ -35,7 +35,5 @@ class PhysicsEngine:
         self.controller.drive(speed, rotation, tm_diff)
 
         # Simulate encoders (NOTE: These values have not been calibrated yet.)
-        self.leftEncoder += lf_motor
-        self.rightEncoder += rf_motor
-        SmartDashboard.putNumber("Left Encoder", self.leftEncoder)
-        SmartDashboard.putNumber("Right Encoder", self.rightEncoder)
+        hal_data['CAN'][robotMap.left1]['quad_position'] += int(lf_motor * 1000)
+        hal_data['CAN'][robotMap.right1]['quad_position'] += int(rf_motor * 1000)
