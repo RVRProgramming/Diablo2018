@@ -13,7 +13,7 @@ class AutoDriveStraight(Command):
         
     def initialize(self):
         super().initialize()
-        driveBase.resetEncoder()
+        driveBase.resetEncoders()
         
     def execute(self):
         super().execute()
