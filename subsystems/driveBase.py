@@ -1,4 +1,5 @@
 import ctre
+from ctre._impl.autogen.ctre_sim_enums import FeedbackDevice
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
 from wpilib.command.subsystem import Subsystem
@@ -6,7 +7,7 @@ from wpilib.robotbase import RobotBase
 from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
-from common.oi import OI, oi
+from common.oi import oi
 
 
 class DriveBase(Subsystem):
@@ -24,6 +25,11 @@ class DriveBase(Subsystem):
         self.l2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.left2)
         self.r1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right1)
         self.r2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right2)
+        
+        self.l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)
+        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)        
+        
+        self.l1.setSensorPhase(True)
         
         # Invert motor output as necessary.
         #self.l1.setInverted(True)
