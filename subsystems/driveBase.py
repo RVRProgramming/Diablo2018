@@ -6,6 +6,7 @@ from wpilib.robotbase import RobotBase
 from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
+from common.oi import OI, oi
 
 
 class DriveBase(Subsystem):
@@ -25,8 +26,8 @@ class DriveBase(Subsystem):
         self.r2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right2)
         
         # Invert motor output as necessary.
-        self.l1.setInverted(True)
-        self.l2.setInverted(True)
+        #self.l1.setInverted(True)
+        #self.l2.setInverted(True)
         self.r1.setInverted(True)
         self.r2.setInverted(True)
         
@@ -65,6 +66,9 @@ class DriveBase(Subsystem):
         if RobotBase.isReal():
             SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
             SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
+            SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
+            SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
+            
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
 
