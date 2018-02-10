@@ -23,7 +23,7 @@ class DriveBase(Subsystem):
         self.l2.follow(self.l1)
         self.r2.follow(self.r1)
         
-        if not RobotBase.isReal():
+        if RobotBase.isReal():
             self.l1.configPeakCurrentLimit(40, 10)
             self.l1.configPeakCurrentDuration(10000, 10)
             self.l1.configContinuousCurrentLimit(35, 10)
