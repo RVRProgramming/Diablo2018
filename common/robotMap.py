@@ -1,31 +1,44 @@
-PLACEHOLDER = 1  # This is definitely going to cause problems later...
-
-gamepad = 1
+###############
+# Controllers #
+###############
 joystick = 0
+gamepad = 1
 
-r1 = 4
-r2 = 2
-l1 = 1
-l2 = 3
-
-leftDriveStick = 1
-rightDriveStick = 5
-slowDriveButton = 6
-
+##############
+# Drive Base #
+##############
+# Motors
+left1 = 1
+left2 = 3
+right1 = 4
+right2 = 2
+# Axes and Buttons
+leftDriveStick = 1  # Gamepad: Left Thumbstick
+rightDriveStick = 5  # Gamepad: Right Thumbstick
+slowDriveButton = 6  # Gamepad: Right Bumper
+# Constants
 maxDriveSpeed = 1
 slowDriveSpeed = 0.75
 
+###########
+# Grabber #
+###########
+# Motors
+leftArmMotor = 1  # This is a PLACEHOLDER
+rightArmMotor = 2  # This is a PLACEHOLDER
+# Axes and Buttons
+grabberOpen = 2  # Joystick: Thumb
+grabberClose = 1  # Joystick: Trigger
+# Constants
 grabberSpeed = 1
 
-grabberOpen = 2
-grabberClose = 1
-
-leftArmMotor = 1 #This is a PLACEHOLDER
-rightArmMotor = 2 #This is a PLACEHOLDER
-
-elevatorStick = 1
-
-elevatorMotor1 = 3 #This is a PLACEHOLDER
-elevatorMotor2 = 4 #This is a PLACEHOLDER
-
+############
+# Elevator #
+############
+# Motors
+elevatorMotor1 = 3  # This is a PLACEHOLDER
+elevatorMotor2 = 4  # This is a PLACEHOLDER
+# Axes and Buttons
+elevatorStick = 1  # Joystick: Y-Axis
+# Constants
 elevatorMaxSpeed = 1
