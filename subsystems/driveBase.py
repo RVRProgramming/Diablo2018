@@ -1,4 +1,6 @@
 import ctre
+from robotpy_ext.common_drivers.navx.ahrs import AHRS
+import wpilib
 from wpilib.command.subsystem import Subsystem
 from wpilib.robotbase import RobotBase
 from wpilib.smartdashboard import SmartDashboard
@@ -10,6 +12,11 @@ class DriveBase(Subsystem):
     
     def __init__(self):
         super().__init__()
+        # Initialize and calibrate the NavX-MXP.
+        self.gyro = AHRS.create_spi(wpilib.SPI.Port.kMXP)
+        while(self.gyro.isCalibrating() and RobotBase.isReal()):
+            pass
+        self.gyro.reset()
         
         # Initialize motors.
         self.l1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.left1)
@@ -54,9 +61,10 @@ class DriveBase(Subsystem):
         self.l1.set(leftSpeed)
         self.r1.set(rightSpeed)
         
-        # Add encoder values to the SmartDash.
+        # Add encoder and gyro values to the SmartDash.
         SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
         SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
+        SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
 
 driveBase = DriveBase()
