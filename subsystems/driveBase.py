@@ -27,7 +27,7 @@ class DriveBase(Subsystem):
         self.r2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right2)
         
         self.l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)
-        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)        
+        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)      
         
         self.l1.setSensorPhase(True)
         
@@ -77,5 +77,10 @@ class DriveBase(Subsystem):
             
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
+    def getGyroAngle(self):
+        return self.gyro.getAngle()
+        
+    def resetGyroAngle(self):
+        self.gyro.reset()
 
 driveBase = DriveBase()
