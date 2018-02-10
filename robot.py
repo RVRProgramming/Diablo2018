@@ -12,14 +12,16 @@ class MyRobot(CommandBasedRobot):
         from commands.teleGrab import TeleGrab
         from commands.teleElevate import TeleElevate
         from commands.autoTurn import AutoTurn
+        from commands.autoDriveStraight import AutoDriveStraight
         self.teleDrive = TeleDrive()
         self.teleGrab = TeleGrab()
         self.teleElevate = TeleElevate()
         self.autoTurn = AutoTurn(90)
+        self.autoDriveStraight = AutoDriveStraight(15)
 
     def autonomousInit(self):
         super().autonomousInit()
-        self.autoTurn.start()
+        self.autoDriveStraight.start()
         
     def teleopInit(self):
         super().teleopInit()

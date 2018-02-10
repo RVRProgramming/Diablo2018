@@ -32,8 +32,8 @@ class DriveBase(Subsystem):
         self.l1.setSensorPhase(True)
         
         # Invert motor output as necessary.
-        #self.l1.setInverted(True)
-        #self.l2.setInverted(True)
+        # self.l1.setInverted(True)
+        # self.l2.setInverted(True)
         self.r1.setInverted(True)
         self.r2.setInverted(True)
         
@@ -70,8 +70,8 @@ class DriveBase(Subsystem):
         
         # Add encoder and gyro values to the SmartDash.
         if RobotBase.isReal():
-            SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
-            SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
+            SmartDashboard.putNumber("Left Encoder", self.getLeftEncoder())
+            SmartDashboard.putNumber("Right Encoder", self.getRightEncoder())
             SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
             SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
             
@@ -82,5 +82,16 @@ class DriveBase(Subsystem):
         
     def resetGyroAngle(self):
         self.gyro.reset()
+        
+    def getLeftEncoder(self):
+        return -self.l1.getSensorCollection().getQuadraturePosition()
+        
+    def getRightEncoder(self):
+        return self.r1.getSensorCollection().getQuadraturePosition()
+    
+    def resetEncoders(self):
+        self.l1.getSensorCollection().setQuadraturePosition(0, 10)
+        self.r1.getSensorCollection().setQuadraturePosition(0, 10)
+
 
 driveBase = DriveBase()
