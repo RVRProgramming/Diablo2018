@@ -62,8 +62,9 @@ class DriveBase(Subsystem):
         self.r1.set(rightSpeed)
         
         # Add encoder and gyro values to the SmartDash.
-        SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
-        SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
+        if RobotBase.isReal():
+            SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
+            SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
 
