@@ -12,11 +12,11 @@ class OI:
         
         # Returns the Left Drive speed.
     def getLeftDrive(self):
-        return self.gamepad.getRawAxis(robotMap.leftDriveStick)
+        return -self.gamepad.getRawAxis(robotMap.leftDriveStick)
     
         # Returns the Right Drive speed.
     def getRightDrive(self):
-        return self.gamepad.getRawAxis(robotMap.rightDriveStick)
+        return -self.gamepad.getRawAxis(robotMap.rightDriveStick)
     
         # Returns the drive speed modifier.
     def getDriveSpeedModifier(self):

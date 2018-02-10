@@ -8,10 +8,10 @@ gamepad = 1
 # Drive Base #
 ##############
 # Motors
-left1 = 1
-left2 = 3
-right1 = 4
-right2 = 2
+left1 = 2
+left2 = 4
+right1 = 1
+right2 = 3
 # Axes and Buttons
 leftDriveStick = 1  # Gamepad: Left Thumbstick
 rightDriveStick = 5  # Gamepad: Right Thumbstick

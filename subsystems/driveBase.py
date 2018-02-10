@@ -1,4 +1,5 @@
 import ctre
+from ctre._impl.autogen.ctre_sim_enums import FeedbackDevice
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
 from wpilib.command.subsystem import Subsystem
@@ -6,6 +7,7 @@ from wpilib.robotbase import RobotBase
 from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
+from common.oi import oi
 
 
 class DriveBase(Subsystem):
@@ -24,9 +26,14 @@ class DriveBase(Subsystem):
         self.r1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right1)
         self.r2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right2)
         
+        self.l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)
+        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)      
+        
+        self.l1.setSensorPhase(True)
+        
         # Invert motor output as necessary.
-        self.l1.setInverted(True)
-        self.l2.setInverted(True)
+        # self.l1.setInverted(True)
+        # self.l2.setInverted(True)
         self.r1.setInverted(True)
         self.r2.setInverted(True)
         
@@ -63,9 +70,28 @@ class DriveBase(Subsystem):
         
         # Add encoder and gyro values to the SmartDash.
         if RobotBase.isReal():
-            SmartDashboard.putNumber("Left Encoder", self.l1.getSensorCollection().getQuadraturePosition())
-            SmartDashboard.putNumber("Right Encoder", self.r1.getSensorCollection().getQuadraturePosition())
+            SmartDashboard.putNumber("Left Encoder", self.getLeftEncoder())
+            SmartDashboard.putNumber("Right Encoder", self.getRightEncoder())
+            SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
+            SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
+            
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
+    def getGyroAngle(self):
+        return self.gyro.getAngle()
+        
+    def resetGyroAngle(self):
+        self.gyro.reset()
+        
+    def getLeftEncoder(self):
+        return -self.l1.getSensorCollection().getQuadraturePosition()
+        
+    def getRightEncoder(self):
+        return self.r1.getSensorCollection().getQuadraturePosition()
+    
+    def resetEncoders(self):
+        self.l1.getSensorCollection().setQuadraturePosition(0, 10)
+        self.r1.getSensorCollection().setQuadraturePosition(0, 10)
+
 
 driveBase = DriveBase()
