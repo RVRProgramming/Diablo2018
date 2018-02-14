@@ -1,5 +1,5 @@
 import ctre
-from ctre._impl.autogen.ctre_sim_enums import FeedbackDevice
+from ctre._impl.autogen.ctre_sim_enums import FeedbackDevice, ControlMode
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
 from wpilib.command.subsystem import Subsystem
@@ -63,19 +63,32 @@ class DriveBase(Subsystem):
             self.r2.configContinuousCurrentLimit(35, 10)
             self.r2.enableCurrentLimit(True)
         
+        # Set PID Constants.
+        self.l1.selectProfileSlot(0, 0)
+        self.l1.config_kF(0, robotMap.kF, 10)
+        self.l1.config_kP(0, robotMap.kP, 10)
+        self.l1.config_kD(0, robotMap.kD, 10)
+        self.l1.config_kI(0, robotMap.kI, 10)
+        
+        self.r1.selectProfileSlot(0, 0)
+        self.r1.config_kF(0, robotMap.kF, 10)
+        self.r1.config_kP(0, robotMap.kP, 10)
+        self.r1.config_kD(0, robotMap.kD, 10)
+        self.r1.config_kI(0, robotMap.kI, 10)
+    
+    def diagnosticsToSmartDash(self):
+        # Add position, velocity, and angle values to the SmartDash.
+        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftEncoder() / 4096)
+        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / 1000 if RobotBase.isSimulation() else self.getRightEncoder() / 4096)
+        
+        SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
+        SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
+        SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
+
     def drive(self, leftSpeed, rightSpeed):
         # Set drive speed.
         self.l1.set(leftSpeed)
         self.r1.set(rightSpeed)
-        
-        # Add encoder and gyro values to the SmartDash.
-        if RobotBase.isReal():
-            SmartDashboard.putNumber("Left Encoder", self.getLeftEncoder())
-            SmartDashboard.putNumber("Right Encoder", self.getRightEncoder())
-            SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
-            SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
-            
-        SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
         
     def getGyroAngle(self):
         return self.gyro.getAngle()
@@ -83,15 +96,24 @@ class DriveBase(Subsystem):
     def resetGyroAngle(self):
         self.gyro.reset()
         
-    def getLeftEncoder(self):
+    def getLeftPosition(self):
         return -self.l1.getSensorCollection().getQuadraturePosition()
         
-    def getRightEncoder(self):
+    def getRightPosition(self):
         return self.r1.getSensorCollection().getQuadraturePosition()
     
-    def resetEncoders(self):
+    def resetEncoderPosition(self):
         self.l1.getSensorCollection().setQuadraturePosition(0, 10)
         self.r1.getSensorCollection().setQuadraturePosition(0, 10)
+        
+    def getRightVelocity(self):
+        self.r1.getSensorCollection().getQuadratureVelocity()
+        
+    def getLeftVelocity(self):
+        self.l1.getSensorCollection().getQuadratureVelocity()
 
+    def positionPID(self, position):
+        self.l1.set(ControlMode.Position, position)
+        self.r1.set(ControlMode.Position, position)
 
 driveBase = DriveBase()

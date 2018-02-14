@@ -16,18 +16,10 @@ class AutoDriveStraight(Command):
         driveBase.resetEncoderPosition()
         
     def execute(self):
-        super().execute()
-        if self.distance < 0:
-            driveBase.drive(-0.5, -0.5)
-        else:
-            driveBase.drive(0.5, 0.5)
+        driveBase.positionPID(self.distance)
             
     def isFinished(self):
-        super().isFinished()
-        if ((driveBase.getLeftPosition() > self.distance and driveBase.getRightPosition() > self.distance and self.distance > 0) or (driveBase.getLeftPosition() < self.distance and driveBase.getRightPosition() < self.distance and self.distance < 0)):
-            return True
-        else:
-            return False 
+        return True if (abs((driveBase.getRightVelocity() + driveBase.getLeftVelocity())) / 8192) * 600 < 1 else False
     
     def end(self):
         super().end()

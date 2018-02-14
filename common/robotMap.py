@@ -19,6 +19,10 @@ slowDriveButton = 6  # Gamepad: Right Bumper
 # Constants
 maxDriveSpeed = 1
 slowDriveSpeed = 0.75
+kF = 0
+kP = 0
+kI = 0
+kD = 0
 
 ###########
 # Grabber #
@@ -30,7 +34,7 @@ rightArmMotor = 2  # This is a PLACEHOLDER
 grabberOpen = 2  # Joystick: Thumb
 grabberClose = 1  # Joystick: Trigger
 # Constants
-grabberSpeed = 1
+grabberSpeed = 0.1
 
 ############
 # Elevator #

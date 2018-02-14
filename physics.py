@@ -1,4 +1,3 @@
-from hal_impl.data import hal_data
 from pyfrc.physics.drivetrains import four_motor_drivetrain
 
 from common import robotMap
@@ -10,10 +9,6 @@ class PhysicsEngine:
         # Initialize the Sim and Gyro.
         self.controller = controller
         self.controller.add_device_gyro_channel('navxmxp_spi_4_angle')        
-        
-        # Zero out encoders.
-        #hal_data['CAN'][robotMap.left1]['quad_position'] = 0
-        #hal_data['CAN'][robotMap.right1]['quad_position'] = 0
         
     """
         Keyword arguments:
