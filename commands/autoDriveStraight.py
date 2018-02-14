@@ -21,6 +21,7 @@ class AutoDriveStraight(Command):
             driveBase.drive(-0.5, -0.5)
         else:
             driveBase.drive(0.5, 0.5)
+        driveBase.diagnosticsToSmartDash()
             
     def isFinished(self):
         super().isFinished()

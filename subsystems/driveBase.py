@@ -78,11 +78,14 @@ class DriveBase(Subsystem):
     
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
-        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftEncoder() / 4096)
-        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / 1000 if RobotBase.isSimulation() else self.getRightEncoder() / 4096)
+        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftPosition() / 4096)
+        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / 1000 if RobotBase.isSimulation() else self.getRightPosition() / 4096)
+        SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
+        SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
         
         SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
         SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
+        
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
 
     def drive(self, leftSpeed, rightSpeed):
@@ -107,10 +110,10 @@ class DriveBase(Subsystem):
         self.r1.getSensorCollection().setQuadraturePosition(0, 10)
         
     def getRightVelocity(self):
-        self.r1.getSensorCollection().getQuadratureVelocity()
+        return self.r1.getSensorCollection().getQuadratureVelocity()
         
     def getLeftVelocity(self):
-        self.l1.getSensorCollection().getQuadratureVelocity()
+        return -self.l1.getSensorCollection().getQuadratureVelocity()
 
     def positionPID(self, position):
         self.l1.set(ControlMode.Position, position)

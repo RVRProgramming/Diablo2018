@@ -17,6 +17,7 @@ class AutoDriveStraight(Command):
         
     def execute(self):
         driveBase.positionPID(self.distance)
+        driveBase.diagnosticsToSmartDash()
             
     def isFinished(self):
         return True if (abs((driveBase.getRightVelocity() + driveBase.getLeftVelocity())) / 8192) * 600 < 1 else False

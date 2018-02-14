@@ -13,7 +13,7 @@ left2 = 4
 right1 = 1
 right2 = 3
 # Axes and Buttons
-leftDriveStick = 1  # Gamepad: Left Thumbstick
+leftDriveStick = 0  # Gamepad: Left Thumbstick
 rightDriveStick = 5  # Gamepad: Right Thumbstick
 slowDriveButton = 6  # Gamepad: Right Bumper
 # Constants
