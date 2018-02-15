@@ -1,5 +1,5 @@
 import ctre
-from ctre._impl.autogen.ctre_sim_enums import FeedbackDevice, ControlMode
+from ctre import FeedbackDevice, ControlMode
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
 from wpilib.command.subsystem import Subsystem
@@ -65,21 +65,21 @@ class DriveBase(Subsystem):
         
         # Set PID Constants and Settings.
         self.l1.selectProfileSlot(0, 0)
-        self.l1.config_kF(0, robotMap.kF, 10)
-        self.l1.config_kP(0, robotMap.kP, 10)
-        self.l1.config_kD(0, robotMap.kD, 10)
-        self.l1.config_kI(0, robotMap.kI, 10)
+        self.l1.config_kF(0, 0.25575*2, 10)
+        self.l1.config_kP(0, 0.9, 10)
+        self.l1.config_kD(0, 0, 10)
+        self.l1.config_kI(0, 0, 10)
         
         self.r1.selectProfileSlot(0, 0)
-        self.r1.config_kF(0, robotMap.kF, 10)
-        self.r1.config_kP(0, robotMap.kP, 10)
-        self.r1.config_kD(0, robotMap.kD, 10)
-        self.r1.config_kI(0, robotMap.kI, 10)
+        self.r1.config_kF(0, 0.25575*2, 10)
+        self.r1.config_kP(0, 0.9, 10)
+        self.r1.config_kD(0, 0, 10)
+        self.r1.config_kI(0, 0, 10)
     
         self.l1.configNominalOutputForward(0, 10)
         self.l1.configNominalOutputReverse(0, 10)
-        self.l1.configPeakOutputForward(0.75 * 12, 10)
-        self.l1.configPeakOutputReverse(-0.75 * 12, 10)
+        self.l1.configPeakOutputForward(1 * 12, 10)
+        self.l1.configPeakOutputReverse(-1 * 12, 10)
         
         self.r1.configNominalOutputForward(0, 10)
         self.r1.configNominalOutputReverse(0, 10)
@@ -89,12 +89,20 @@ class DriveBase(Subsystem):
         self.l1.configAllowableClosedloopError(0, 0, 10)
         self.r1.configAllowableClosedloopError(0, 0, 10)
         
+        self.maxLeftVelocity = 0
+        self.maxRightVelocity = 0
+        
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
+        self.maxLeftVelocity = self.getLeftVelocity() if self.getLeftVelocity() > self.maxLeftVelocity else self.maxLeftVelocity
+        self.maxRightVelocity = self.getRightVelocity() if self.getRightVelocity() > self.maxRightVelocity else self.maxRightVelocity
+        
         SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftPosition() / 4096)
         SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / 1000 if RobotBase.isSimulation() else self.getRightPosition() / 4096)
         SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
         SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
+        SmartDashboard.putNumber("Max Left Velocity", self.maxLeftVelocity)
+        SmartDashboard.putNumber("Max Right Velocity", self.maxRightVelocity)
         
         SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
         SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
@@ -113,7 +121,7 @@ class DriveBase(Subsystem):
         self.gyro.reset()
         
     def getLeftPosition(self):
-        return -self.l1.getSensorCollection().getQuadraturePosition()
+        return -self.l1.getSensorCollection().getQuadraturePosition() 
         
     def getRightPosition(self):
         return self.r1.getSensorCollection().getQuadraturePosition()

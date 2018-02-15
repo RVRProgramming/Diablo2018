@@ -18,14 +18,14 @@ class AutoDriveStraight(Command):
     def execute(self):
         super().execute()
         if self.distance < 0:
-            driveBase.drive(-0.5, -0.5)
+            driveBase.drive(-0.35, -0.35)
         else:
-            driveBase.drive(0.5, 0.5)
+            driveBase.drive(0.35, 0.35)
         driveBase.diagnosticsToSmartDash()
             
     def isFinished(self):
         super().isFinished()
-        if ((driveBase.getLeftPosition() > self.distance and driveBase.getRightPosition() > self.distance and self.distance > 0) or (driveBase.getLeftPosition() < self.distance and driveBase.getRightPosition() < self.distance and self.distance < 0)):
+        if ((driveBase.getLeftPosition() > self.distance and driveBase.getRightPosition() > self.distance and self.distance > 0) or (driveBase.getLeftPosition() < self.distance and driveBase.getRightPosition() < self.distance / 4096 and self.distance < 0)):
             return True
         else:
             return False 

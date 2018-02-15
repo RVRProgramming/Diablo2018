@@ -19,10 +19,6 @@ slowDriveButton = 6  # Gamepad: Right Bumper
 # Constants
 maxDriveSpeed = 1
 slowDriveSpeed = 0.75
-kF = 0
-kP = 0
-kI = 0
-kD = 0
 
 ###########
 # Grabber #
