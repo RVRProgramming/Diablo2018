@@ -63,7 +63,7 @@ class DriveBase(Subsystem):
             self.r2.configContinuousCurrentLimit(35, 10)
             self.r2.enableCurrentLimit(True)
         
-        # Set PID Constants.
+        # Set PID Constants and Settings.
         self.l1.selectProfileSlot(0, 0)
         self.l1.config_kF(0, robotMap.kF, 10)
         self.l1.config_kP(0, robotMap.kP, 10)
@@ -76,6 +76,19 @@ class DriveBase(Subsystem):
         self.r1.config_kD(0, robotMap.kD, 10)
         self.r1.config_kI(0, robotMap.kI, 10)
     
+        self.l1.configNominalOutputForward(0, 10)
+        self.l1.configNominalOutputReverse(0, 10)
+        self.l1.configPeakOutputForward(0.75 * 12, 10)
+        self.l1.configPeakOutputReverse(-0.75 * 12, 10)
+        
+        self.r1.configNominalOutputForward(0, 10)
+        self.r1.configNominalOutputReverse(0, 10)
+        self.r1.configPeakOutputForward(0.75 * 12, 10)
+        self.r1.configPeakOutputReverse(-0.75 * 12, 10)
+        
+        self.l1.configAllowableClosedloopError(0, 0, 10)
+        self.r1.configAllowableClosedloopError(0, 0, 10)
+        
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
         SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftPosition() / 4096)

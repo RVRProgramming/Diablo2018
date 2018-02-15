@@ -5,7 +5,7 @@ from wpilib.robotbase import RobotBase
 from subsystems.driveBase import driveBase
 
 
-class AutoDriveStraight(Command):
+class AutoDriveStraightPID(Command):
     
     def __init__(self, distance):
         super().__init__()
