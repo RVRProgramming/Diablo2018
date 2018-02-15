@@ -65,26 +65,26 @@ class DriveBase(Subsystem):
         
         # Set PID Constants and Settings.
         self.l1.selectProfileSlot(0, 0)
-        self.l1.config_kF(0, 0.25575*2, 10)
+        self.l1.config_kF(0, 0.25575, 10)
         self.l1.config_kP(0, 0.9, 10)
         self.l1.config_kD(0, 0, 10)
         self.l1.config_kI(0, 0, 10)
         
         self.r1.selectProfileSlot(0, 0)
-        self.r1.config_kF(0, 0.25575*2, 10)
+        self.r1.config_kF(0, 0.25575, 10)
         self.r1.config_kP(0, 0.9, 10)
         self.r1.config_kD(0, 0, 10)
         self.r1.config_kI(0, 0, 10)
     
         self.l1.configNominalOutputForward(0, 10)
         self.l1.configNominalOutputReverse(0, 10)
-        self.l1.configPeakOutputForward(1 * 12, 10)
-        self.l1.configPeakOutputReverse(-1 * 12, 10)
+        self.l1.configPeakOutputForward(1, 10)
+        self.l1.configPeakOutputReverse(-1, 10)
         
         self.r1.configNominalOutputForward(0, 10)
         self.r1.configNominalOutputReverse(0, 10)
-        self.r1.configPeakOutputForward(0.75 * 12, 10)
-        self.r1.configPeakOutputReverse(-0.75 * 12, 10)
+        self.r1.configPeakOutputForward(1, 10)
+        self.r1.configPeakOutputReverse(-1, 10)
         
         self.l1.configAllowableClosedloopError(0, 0, 10)
         self.r1.configAllowableClosedloopError(0, 0, 10)
