@@ -27,7 +27,7 @@ class DriveBase(Subsystem):
         self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, robotMap.ctreTimeout)      
         
         # Left sensor runs in reverse so the phase must be set for PID.
-        self.l1.setSensorPhase(True)
+        # self.l1.setSensorPhase(True)
         
         # Invert motor output as necessary.
         self.r1.setInverted(True)
@@ -68,14 +68,14 @@ class DriveBase(Subsystem):
         
         # Set PID Constants and Settings.
         self.l1.selectProfileSlot(robotMap.PIDSlot, 0)
-        self.l1.config_kF(robotMap.PIDSlot, 0.341, robotMap.ctreTimeout)
-        self.l1.config_kP(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
+        self.l1.config_kF(robotMap.PIDSlot, 0.341*0, robotMap.ctreTimeout)
+        self.l1.config_kP(robotMap.PIDSlot, 0.008, robotMap.ctreTimeout)
         self.l1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         self.l1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         
         self.r1.selectProfileSlot(robotMap.PIDSlot, 0)
-        self.r1.config_kF(robotMap.PIDSlot, 0.341, robotMap.ctreTimeout)
-        self.r1.config_kP(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
+        self.r1.config_kF(robotMap.PIDSlot, 0.341*0, robotMap.ctreTimeout)
+        self.r1.config_kP(robotMap.PIDSlot, 0.008, robotMap.ctreTimeout)
         self.r1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         self.r1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
     

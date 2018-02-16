@@ -27,7 +27,7 @@ countsPerRevolution = 4096
 # PID
 PIDSlot = 0
 maxPIDSpeed = 0.75
-allowablePIDError = 0
+allowablePIDError = 250
 
 
 ###########
