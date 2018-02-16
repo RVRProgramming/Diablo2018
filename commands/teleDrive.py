@@ -18,10 +18,14 @@ class TeleDrive(Command):
         
     def execute(self):
         # Set the drive speeds in accordance with the Gamepad thumbstick values and Drive Speed Modifier
-        # driveBase.drive(oi.getLeftDrive() * oi.getDriveSpeedModifier(), oi.getRightDrive() * oi.getDriveSpeedModifier())
-        driveBase.drive((oi.getRightDrive() - self.getTurnSpeed()) * oi.getDriveSpeedModifier(), (oi.getRightDrive() + self.getTurnSpeed()) * oi.getDriveSpeedModifier())
-        driveBase.diagnosticsToSmartDash()
         
+        # This is the normal tank drive.
+        # driveBase.drive(oi.getLeftDrive() * oi.getDriveSpeedModifier(), oi.getRightDrive() * oi.getDriveSpeedModifier())
+        
+        # This is the janky arcade drive.
+        driveBase.drive((oi.getRightDrive() - self.getTurnSpeed()) * oi.getDriveSpeedModifier(), (oi.getRightDrive() + self.getTurnSpeed()) * oi.getDriveSpeedModifier())
+        
+    # This is a function used only for the janky arcade drive.
     def getTurnSpeed(self):
         if oi.getRightDrive() > 0.1:
             return (oi.getLeftDrive() * oi.getRightDrive())

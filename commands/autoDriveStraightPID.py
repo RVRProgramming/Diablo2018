@@ -1,7 +1,7 @@
 
 from wpilib.command.command import Command
-from wpilib.robotbase import RobotBase
 
+from common import robotMap
 from subsystems.driveBase import driveBase
 
 
@@ -9,7 +9,7 @@ class AutoDriveStraightPID(Command):
     
     def __init__(self, distance):
         super().__init__()
-        self.distance = distance * 1000 if RobotBase.isSimulation() else distance * 4096
+        self.distance = distance * robotMap.countsPerRevolution
         
     def initialize(self):
         super().initialize()
@@ -17,10 +17,10 @@ class AutoDriveStraightPID(Command):
         
     def execute(self):
         driveBase.positionPID(self.distance)
-        driveBase.diagnosticsToSmartDash()
             
     def isFinished(self):
-        return True if (abs((driveBase.getRightVelocity() + driveBase.getLeftVelocity())) / 8192) * 600 < 1 else False
+        # Return True if the velocity of both sides is less than 1 RPM.
+        return True if abs((driveBase.getLeftVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 and abs((driveBase.getRightVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 else False
     
     def end(self):
         super().end()

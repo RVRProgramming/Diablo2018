@@ -1,15 +1,15 @@
 
 from wpilib.command.command import Command
-from wpilib.robotbase import RobotBase
 
 from subsystems.driveBase import driveBase
+from common import robotMap
 
 
 class AutoDriveStraight(Command):
     
     def __init__(self, distance):
         super().__init__()
-        self.distance = distance * 1000 if RobotBase.isSimulation() else distance * 4096
+        self.distance = distance * robotMap.countsPerRevolution
         
     def initialize(self):
         super().initialize()
@@ -21,11 +21,10 @@ class AutoDriveStraight(Command):
             driveBase.drive(-0.35, -0.35)
         else:
             driveBase.drive(0.35, 0.35)
-        driveBase.diagnosticsToSmartDash()
             
     def isFinished(self):
         super().isFinished()
-        if ((driveBase.getLeftPosition() > self.distance and driveBase.getRightPosition() > self.distance and self.distance > 0) or (driveBase.getLeftPosition() < self.distance and driveBase.getRightPosition() < self.distance / 4096 and self.distance < 0)):
+        if ((driveBase.getLeftPosition() > self.distance and driveBase.getRightPosition() > self.distance and self.distance > 0) or (driveBase.getLeftPosition() < self.distance and driveBase.getRightPosition() < self.distance and self.distance < 0)):
             return True
         else:
             return False 

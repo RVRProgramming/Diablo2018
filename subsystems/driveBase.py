@@ -1,5 +1,5 @@
-import ctre
 from ctre import FeedbackDevice, ControlMode
+import ctre
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
 from wpilib.command.subsystem import Subsystem
@@ -7,7 +7,6 @@ from wpilib.robotbase import RobotBase
 from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
-from common.oi import oi
 
 
 class DriveBase(Subsystem):
@@ -16,9 +15,6 @@ class DriveBase(Subsystem):
         super().__init__()
         # Initialize and calibrate the NavX-MXP.
         self.gyro = AHRS.create_spi(wpilib.SPI.Port.kMXP)
-        while(self.gyro.isCalibrating() and RobotBase.isReal()):
-            pass
-        self.gyro.reset()
         
         # Initialize motors.
         self.l1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.left1)
@@ -26,14 +22,14 @@ class DriveBase(Subsystem):
         self.r1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right1)
         self.r2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.right2)
         
-        self.l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)
-        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10)      
+        # Select a sensor for PID.
+        self.l1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, robotMap.ctreTimeout)
+        self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, robotMap.ctreTimeout)      
         
+        # Left sensor runs in reverse so the phase must be set for PID.
         self.l1.setSensorPhase(True)
         
         # Invert motor output as necessary.
-        # self.l1.setInverted(True)
-        # self.l2.setInverted(True)
         self.r1.setInverted(True)
         self.r2.setInverted(True)
         
@@ -43,69 +39,71 @@ class DriveBase(Subsystem):
         
         # If code is running on a RoboRio, configure current limiting.
         if RobotBase.isReal():
-            self.l1.configPeakCurrentLimit(40, 10)
-            self.l1.configPeakCurrentDuration(10000, 10)
-            self.l1.configContinuousCurrentLimit(35, 10)
+            self.l1.configPeakCurrentLimit(robotMap.peakCurrent, robotMap.ctreTimeout)
+            self.l1.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
+            self.l1.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.l1.enableCurrentLimit(True)
             
-            self.l2.configPeakCurrentLimit(40, 10)
-            self.l2.configPeakCurrentDuration(10000, 10)
-            self.l2.configContinuousCurrentLimit(35, 10)
+            self.l2.configPeakCurrentLimit(robotMap.peakCurrent, robotMap.ctreTimeout)
+            self.l2.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
+            self.l2.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.l2.enableCurrentLimit(True)
             
-            self.r1.configPeakCurrentLimit(40, 10)
-            self.r1.configPeakCurrentDuration(10000, 10)
-            self.r1.configContinuousCurrentLimit(35, 10)
+            self.r1.configPeakCurrentLimit(robotMap.peakCurrent, robotMap.ctreTimeout)
+            self.r1.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
+            self.r1.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.r1.enableCurrentLimit(True)
             
-            self.r2.configPeakCurrentLimit(40, 10)
-            self.r2.configPeakCurrentDuration(10000, 10)
-            self.r2.configContinuousCurrentLimit(35, 10)
+            self.r2.configPeakCurrentLimit(robotMap.peakCurrent, robotMap.ctreTimeout)
+            self.r2.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
+            self.r2.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.r2.enableCurrentLimit(True)
         
         # Set PID Constants and Settings.
-        self.l1.selectProfileSlot(0, 0)
-        self.l1.config_kF(0, 0.25575, 10)
-        self.l1.config_kP(0, 0.9, 10)
-        self.l1.config_kD(0, 0, 10)
-        self.l1.config_kI(0, 0, 10)
+        self.l1.selectProfileSlot(robotMap.PIDSlot, 0)
+        self.l1.config_kF(robotMap.PIDSlot, 0.341, robotMap.ctreTimeout)
+        self.l1.config_kP(robotMap.PIDSlot, 0.9, robotMap.ctreTimeout)
+        self.l1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
+        self.l1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         
-        self.r1.selectProfileSlot(0, 0)
-        self.r1.config_kF(0, 0.25575, 10)
-        self.r1.config_kP(0, 0.9, 10)
-        self.r1.config_kD(0, 0, 10)
-        self.r1.config_kI(0, 0, 10)
+        self.r1.selectProfileSlot(robotMap.PIDSlot, 0)
+        self.r1.config_kF(robotMap.PIDSlot, 0.341, robotMap.ctreTimeout)
+        self.r1.config_kP(robotMap.PIDSlot, 0.9, robotMap.ctreTimeout)
+        self.r1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
+        self.r1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
     
-        self.l1.configNominalOutputForward(0, 10)
-        self.l1.configNominalOutputReverse(0, 10)
-        self.l1.configPeakOutputForward(1, 10)
-        self.l1.configPeakOutputReverse(-1, 10)
+        self.l1.configNominalOutputForward(0, robotMap.ctreTimeout)
+        self.l1.configNominalOutputReverse(0, robotMap.ctreTimeout)
+        self.l1.configPeakOutputForward(robotMap.maxPIDSpeed, robotMap.ctreTimeout)
+        self.l1.configPeakOutputReverse(-robotMap.maxPIDSpeed, robotMap.ctreTimeout)
         
-        self.r1.configNominalOutputForward(0, 10)
-        self.r1.configNominalOutputReverse(0, 10)
-        self.r1.configPeakOutputForward(1, 10)
-        self.r1.configPeakOutputReverse(-1, 10)
+        self.r1.configNominalOutputForward(0, robotMap.ctreTimeout)
+        self.r1.configNominalOutputReverse(0, robotMap.ctreTimeout)
+        self.r1.configPeakOutputForward(robotMap.maxPIDSpeed, robotMap.ctreTimeout)
+        self.r1.configPeakOutputReverse(-robotMap.maxPIDSpeed, robotMap.ctreTimeout)
         
-        self.l1.configAllowableClosedloopError(0, 0, 10)
-        self.r1.configAllowableClosedloopError(0, 0, 10)
+        self.l1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowablePIDError, robotMap.ctreTimeout)
+        self.r1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowablePIDError, robotMap.ctreTimeout)
         
-        self.maxLeftVelocity = 0
-        self.maxRightVelocity = 0
+        # Reset max recorded velocities
+        self.maxRecordedLeftVelocity = 0
+        self.maxRecordedRightVelocity = 0
         
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
-        self.maxLeftVelocity = self.getLeftVelocity() if self.getLeftVelocity() > self.maxLeftVelocity else self.maxLeftVelocity
-        self.maxRightVelocity = self.getRightVelocity() if self.getRightVelocity() > self.maxRightVelocity else self.maxRightVelocity
+        self.maxRecordedLeftVelocity = self.getLeftVelocity() if self.getLeftVelocity() > self.maxRecordedLeftVelocity else self.maxRecordedLeftVelocity
+        self.maxRecordedRightVelocity = self.getRightVelocity() if self.getRightVelocity() > self.maxRecordedRightVelocity else self.maxRecordedRightVelocity
         
-        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / 1000 if RobotBase.isSimulation() else self.getLeftPosition() / 4096)
-        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / 1000 if RobotBase.isSimulation() else self.getRightPosition() / 4096)
+        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / robotMap.countsPerRevolution)
+        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
         SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
         SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
         SmartDashboard.putNumber("Max Left Velocity", self.maxLeftVelocity)
         SmartDashboard.putNumber("Max Right Velocity", self.maxRightVelocity)
         
-        SmartDashboard.putNumber("Left Thumbstick", oi.getLeftDrive())
-        SmartDashboard.putNumber("Right Thumbstick", oi.getRightDrive())
+        if RobotBase.isReal():
+            SmartDashboard.putNumber("Left Effort", self.l1.getMotorOutputPercent())
+            SmartDashboard.putNumber("Right Effort", self.r1.getMotorOutputPercent())
         
         SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
 
@@ -127,8 +125,8 @@ class DriveBase(Subsystem):
         return self.r1.getSensorCollection().getQuadraturePosition()
     
     def resetEncoderPosition(self):
-        self.l1.getSensorCollection().setQuadraturePosition(0, 10)
-        self.r1.getSensorCollection().setQuadraturePosition(0, 10)
+        self.l1.getSensorCollection().setQuadraturePosition(0, robotMap.ctreTimeout)
+        self.r1.getSensorCollection().setQuadraturePosition(0, robotMap.ctreTimeout)
         
     def getRightVelocity(self):
         return self.r1.getSensorCollection().getQuadratureVelocity()
@@ -139,5 +137,6 @@ class DriveBase(Subsystem):
     def positionPID(self, position):
         self.l1.set(ControlMode.Position, position)
         self.r1.set(ControlMode.Position, position)
+
 
 driveBase = DriveBase()
