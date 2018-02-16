@@ -35,6 +35,7 @@ class MyRobot(CommandBasedRobot):
     # This runs at the beginning of autonomous.
     def autonomousInit(self):
         super().autonomousInit()
+        self.autoDriveStraightPID.start()
         
     # This runs in a loop throughout autonomous.
     def autonomousPeriodic(self):
