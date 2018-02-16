@@ -6,6 +6,7 @@ class MyRobot(CommandBasedRobot):
 
     # This runs as soon as the robot starts up.
     def robotInit(self):      
+        super().robotInit()
         # Import and initialize commands.
         import commands
         self.teleDrive = commands.TeleDrive()
@@ -20,26 +21,28 @@ class MyRobot(CommandBasedRobot):
         
     # This runs in a loop alongside the current mode's periodic function.
     def robotPeriodic(self):
+        super().robotPeriodic()
         self.autoRestartCommand(self.diagnostics)
     
     # This runs as soon as robotInit finishes, and every time the bot is disabled after that.
     def disabledInit(self):
-        pass
+        super().disabledInit()
         
     # This runs in a loop while the bot is disabled.
     def disabledPeriodic(self):
-        pass
+        super().commandPeriodic()
         
     # This runs at the beginning of autonomous.
     def autonomousInit(self):
-        pass
+        super().autonomousInit()
         
     # This runs in a loop throughout autonomous.
     def autonomousPeriodic(self):
-        pass
+        super().autonomousPeriodic()
 
     # This runs at the beginning of teleop.
     def teleopInit(self):
+        super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
         self.teleGrab.start()
@@ -47,11 +50,21 @@ class MyRobot(CommandBasedRobot):
         
     # This runs in a loop throughout teleop.
     def teleopPeriodic(self):
+        super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
         self.autoRestartCommand(self.teleGrab)
         self.autoRestartCommand(self.teleElevate)
     
-    # Starts up the command if it isnt already running.
+    # This runs at the beginning of testing.
+    def testInit(self):
+        super().testInit()
+    
+    # This runs in a loop throughout testing.
+    def testPeriodic(self):
+        super().testPeriodic()
+        pass
+    
+    # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
         if not command.isRunning():
             command.start()

@@ -1,4 +1,4 @@
-from ctre import FeedbackDevice, ControlMode
+from ctre import FeedbackDevice, ControlMode, NeutralMode
 import ctre
 from robotpy_ext.common_drivers.navx.ahrs import AHRS
 import wpilib
@@ -37,6 +37,12 @@ class DriveBase(Subsystem):
         self.l2.follow(self.l1)
         self.r2.follow(self.r1)
         
+        # Set talons to brake automatically.
+        self.l1.setNeutralMode(NeutralMode.Brake)
+        self.l2.setNeutralMode(NeutralMode.Brake)
+        self.r1.setNeutralMode(NeutralMode.Brake)
+        self.r2.setNeutralMode(NeutralMode.Brake)
+        
         # If code is running on a RoboRio, configure current limiting.
         if RobotBase.isReal():
             self.l1.configPeakCurrentLimit(robotMap.peakCurrent, robotMap.ctreTimeout)
@@ -58,6 +64,7 @@ class DriveBase(Subsystem):
             self.r2.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
             self.r2.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.r2.enableCurrentLimit(True)
+            
         
         # Set PID Constants and Settings.
         self.l1.selectProfileSlot(robotMap.PIDSlot, 0)
@@ -98,8 +105,8 @@ class DriveBase(Subsystem):
         SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
         SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
         SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
-        SmartDashboard.putNumber("Max Left Velocity", self.maxLeftVelocity)
-        SmartDashboard.putNumber("Max Right Velocity", self.maxRightVelocity)
+        SmartDashboard.putNumber("Max Left Velocity", self.maxRecordedLeftVelocity)
+        SmartDashboard.putNumber("Max Right Velocity", self.maxRecordedRightVelocity)
         
         if RobotBase.isReal():
             SmartDashboard.putNumber("Left Effort", self.l1.getMotorOutputPercent())
