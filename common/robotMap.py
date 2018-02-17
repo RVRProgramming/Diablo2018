@@ -26,8 +26,11 @@ continuousCurrent = 39
 countsPerRevolution = 4096
 # PID
 PIDSlot = 0
-maxPIDSpeed = 0.75
-allowablePIDError = 250
+maxEffort = 0.75
+minEffort = 0
+allowableError = 250
+mpPeriod = 50
+mpDeadband = 0.01
 
 
 ###########

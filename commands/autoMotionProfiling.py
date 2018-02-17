@@ -1,15 +1,16 @@
 
+from ctre._impl import StatusFrameEnhanced
 from wpilib.command.command import Command
 
 from common import robotMap
 from subsystems.driveBase import driveBase
 
 
-class AutoDriveStraightPID(Command):
+class AutoMotionProfiling(Command):
     
-    def __init__(self, distance):
+    def __init__(self, profile):
         super().__init__()
-        self.distance = distance * robotMap.countsPerRevolution
+        self.profile = profile
         
     def initialize(self):
         super().initialize()
@@ -41,15 +42,19 @@ class AutoDriveStraightPID(Command):
         driveBase.l1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowableError, robotMap.ctreTimeout)
         driveBase.r1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowableError, robotMap.ctreTimeout)
         
+        driveBase.l1.configNeutralDeadband(robotMap.mpDeadband, robotMap.ctreTimeout)
+        driveBase.r1.configNeutralDeadband(robotMap.mpDeadband, robotMap.ctreTimeout)
+        
+        driveBase.l1.configMotionProfileTrajectoryPeriod(robotMap.mpPeriod, robotMap.ctreTimeout)
+        driveBase.r1.configMotionProfileTrajectoryPeriod(robotMap.mpPeriod, robotMap.ctreTimeout)
+        
+        driveBase.l1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, robotMap.mpPeriod, robotMap.ctreTimeout)
+        
     def execute(self):
-        driveBase.positionPID(self.distance)
+        pass
             
     def isFinished(self):
-        # Return True if the velocity of both sides is less than 1 RPM and error is less than 250.
-        if not driveBase.getLeftError() == None and not driveBase.getRightError() == None:
-            return True if abs((driveBase.getLeftVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 and abs((driveBase.getRightVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 and abs(driveBase.getLeftError()) < robotMap.allowableError and abs(driveBase.getRightError()) < robotMap.allowableError else False
-        else:
-            return False
+        return False
     
     def end(self):
         super().end()

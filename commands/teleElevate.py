@@ -9,7 +9,7 @@ class TeleElevate(Command):
     def __init__(self):
         super().__init__()
         
-        # Ensure exclusive access to the Grabber while running.
+        # Ensure exclusive access to the Elevator while running.
         self.requires(elevator)
         
     def execute(self):

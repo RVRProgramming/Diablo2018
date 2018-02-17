@@ -27,7 +27,8 @@ class DriveBase(Subsystem):
         self.r1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, robotMap.ctreTimeout)      
         
         # Left sensor runs in reverse so the phase must be set for PID.
-        # self.l1.setSensorPhase(True)
+        self.l1.setSensorPhase(True)
+        self.r1.setSensorPhase(True)
         
         # Invert motor output as necessary.
         self.r1.setInverted(True)
@@ -64,33 +65,6 @@ class DriveBase(Subsystem):
             self.r2.configPeakCurrentDuration(robotMap.peakTime, robotMap.ctreTimeout)
             self.r2.configContinuousCurrentLimit(robotMap.continuousCurrent, robotMap.ctreTimeout)
             self.r2.enableCurrentLimit(True)
-            
-        
-        # Set PID Constants and Settings.
-        self.l1.selectProfileSlot(robotMap.PIDSlot, 0)
-        self.l1.config_kF(robotMap.PIDSlot, 0.341*0, robotMap.ctreTimeout)
-        self.l1.config_kP(robotMap.PIDSlot, 0.008, robotMap.ctreTimeout)
-        self.l1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
-        self.l1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
-        
-        self.r1.selectProfileSlot(robotMap.PIDSlot, 0)
-        self.r1.config_kF(robotMap.PIDSlot, 0.341*0, robotMap.ctreTimeout)
-        self.r1.config_kP(robotMap.PIDSlot, 0.008, robotMap.ctreTimeout)
-        self.r1.config_kD(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
-        self.r1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
-    
-        self.l1.configNominalOutputForward(0, robotMap.ctreTimeout)
-        self.l1.configNominalOutputReverse(0, robotMap.ctreTimeout)
-        self.l1.configPeakOutputForward(robotMap.maxPIDSpeed, robotMap.ctreTimeout)
-        self.l1.configPeakOutputReverse(-robotMap.maxPIDSpeed, robotMap.ctreTimeout)
-        
-        self.r1.configNominalOutputForward(0, robotMap.ctreTimeout)
-        self.r1.configNominalOutputReverse(0, robotMap.ctreTimeout)
-        self.r1.configPeakOutputForward(robotMap.maxPIDSpeed, robotMap.ctreTimeout)
-        self.r1.configPeakOutputReverse(-robotMap.maxPIDSpeed, robotMap.ctreTimeout)
-        
-        self.l1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowablePIDError, robotMap.ctreTimeout)
-        self.r1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowablePIDError, robotMap.ctreTimeout)
         
         # Reset max recorded velocities
         self.maxRecordedLeftVelocity = 0
@@ -119,6 +93,10 @@ class DriveBase(Subsystem):
         self.l1.set(leftSpeed)
         self.r1.set(rightSpeed)
         
+    def disable(self):
+        self.l1.disable()
+        self.r1.disable()
+        
     def getGyroAngle(self):
         return self.gyro.getAngle()
         
@@ -144,6 +122,12 @@ class DriveBase(Subsystem):
     def positionPID(self, position):
         self.l1.set(ControlMode.Position, position)
         self.r1.set(ControlMode.Position, position)
+        
+    def getLeftError(self):
+        self.l1.getClosedLoopError(0)
+        
+    def getRightError(self):
+        self.r1.getClosedLoopError(0)
 
 
 driveBase = DriveBase()

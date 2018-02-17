@@ -16,7 +16,7 @@ class Grabber(Subsystem):
     def grab(self, speed):
         # Set grabbing speed.
         self.leftArmMotor.set(speed)
-        self.rightArmMotor.set(speed)
+        self.rightArmMotor.set(-speed)
 
 
 grabber = Grabber()

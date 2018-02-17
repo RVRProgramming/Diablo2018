@@ -15,6 +15,7 @@ class MyRobot(CommandBasedRobot):
         self.autoDriveStraightPID = commands.AutoDriveStraightPID(15)
         self.autoDriveStraight = commands.AutoDriveStraight(15)
         self.diagnostics = commands.Diagnostics()
+        self.disaDisableTalons = commands.DisaDisableTalons()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -27,6 +28,7 @@ class MyRobot(CommandBasedRobot):
     # This runs as soon as robotInit finishes, and every time the bot is disabled after that.
     def disabledInit(self):
         super().disabledInit()
+        self.disaDisableTalons.start()
         
     # This runs in a loop while the bot is disabled.
     def disabledPeriodic(self):

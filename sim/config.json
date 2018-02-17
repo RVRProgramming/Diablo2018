@@ -8,36 +8,22 @@
 			"starting_angle": 180
 		},
 		"analog": {
-			"0": "Rear Right Rotation Encoder",
-			"2": "Rear Left Rotation Encoder",
-			"1": "Front Right Rotation Encoder",
-			"3": "Front Left Rotation Encoder",
-			"4": "Pressure Sensor"
+
 		},
 		"pwm": {
-			"3": "Rear Right Rotation Motor",
-			"1": "Rear Left Rotation Motor",
-			"2": "Front Right Rotation Motor",
-			"0": "Front Left Rotation Motor",
-			"4": "Climb Motor 1",
-			"5": "Climb Motor 2",
-			"6": "Gimbal Yaw",
-			"7": "Gimbal Pitch",
-			"8": "Intake Motor",
-			"9": "Belt Motor"
+			"1": "Left Arm Motor",
+			"2": "Right Arm Motor",
+			"3": "Elevator Motor 1",
+			"4": "Elevator Motor 2"
 		},
 		"CAN": {
-			"4": "Rear Right Drive Motor",
-			"6": "Rear Left Drive Motor",
-			"3": "Front Right Drive Motor",
-			"5": "Front Left Drive Motor",
-			"15": "Shooter Motor"
+			"2": "Front Left Drive Motor",
+			"4": "Rear Left Drive Motor",
+			"1": "Front Right Drive Motor",
+			"3": "Rear Right Drive Motor"
 		},
 		"solenoid": {
-			"4": "Pivot Forward",
-			"5": "Pivot Reverse",
-			"6": "Picker Forward",
-			"7": "Picker Reverse"
+
 		},
 		"field": {
 			"w": 27,
