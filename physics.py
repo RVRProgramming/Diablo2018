@@ -30,5 +30,5 @@ class PhysicsEngine:
         self.controller.drive(speed, rotation, tm_diff)
 
         # Simulate encoders (NOTE: These values have not been calibrated yet.)
-        hal_data['CAN'][robotMap.left1]['quad_position'] += int(lf_motor * robotMap.countsPerRevolution)
+        hal_data['CAN'][robotMap.left1]['quad_position'] -= int(lf_motor * robotMap.countsPerRevolution)
         hal_data['CAN'][robotMap.right1]['quad_position'] += int(rf_motor * robotMap.countsPerRevolution)
