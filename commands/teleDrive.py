@@ -1,5 +1,6 @@
 from wpilib.command.command import Command
 
+from common import robotMap
 from common.oi import oi
 from subsystems.driveBase import driveBase
 
@@ -15,6 +16,16 @@ class TeleDrive(Command):
     def initialize(self):
         super().initialize()
         driveBase.resetEncoderPosition()
+        
+        driveBase.l1.configNominalOutputForward(0, robotMap.ctreTimeout)
+        driveBase.l1.configNominalOutputReverse(0, robotMap.ctreTimeout)
+        driveBase.l1.configPeakOutputForward(1, robotMap.ctreTimeout)
+        driveBase.l1.configPeakOutputReverse(-1, robotMap.ctreTimeout)
+        
+        driveBase.r1.configNominalOutputForward(0, robotMap.ctreTimeout)
+        driveBase.r1.configNominalOutputReverse(0, robotMap.ctreTimeout)
+        driveBase.r1.configPeakOutputForward(1, robotMap.ctreTimeout)
+        driveBase.r1.configPeakOutputReverse(-1, robotMap.ctreTimeout)
         
     def execute(self):
         # Set the drive speeds in accordance with the Gamepad thumbstick values and Drive Speed Modifier

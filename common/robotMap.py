@@ -26,9 +26,12 @@ continuousCurrent = 39
 countsPerRevolution = 4096
 # PID
 PIDSlot = 0
+maxStartEffort = 0.1
 maxEffort = 0.75
+maxRampEffort = 0.65
+minRampEffort = 0.1
 minEffort = 0
-allowableError = 250
+allowableError = 250 * 0
 mpPeriod = 50
 mpDeadband = 0.01
 
@@ -37,20 +40,20 @@ mpDeadband = 0.01
 # Grabber #
 ###########
 # Motors
-leftArmMotor = 1              # This is a PLACEHOLDER
-rightArmMotor = 2             # This is a PLACEHOLDER
+leftArmMotor = 0              # This is a PLACEHOLDER
+rightArmMotor = 1             # This is a PLACEHOLDER
 # Axes and Buttons
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
 # Constants
-grabberSpeed = 0.1
+grabberSpeed = 0.33
 
 ############
 # Elevator #
 ############
 # Motors
-elevatorMotor1 = 3            # This is a PLACEHOLDER
-elevatorMotor2 = 4            # This is a PLACEHOLDER
+elevatorMotor1 = 2            # This is a PLACEHOLDER
+elevatorMotor2 = 3            # This is a PLACEHOLDER
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis
 # Constants

@@ -12,8 +12,7 @@ class MyRobot(CommandBasedRobot):
         self.teleDrive = commands.TeleDrive()
         self.teleGrab = commands.TeleGrab()
         self.teleElevate = commands.TeleElevate()
-        self.autoDriveStraightPID = commands.AutoDriveStraightPID(15)
-        self.autoDriveStraight = commands.AutoDriveStraight(15)
+        self.autoDriveStraightPID = commands.AutoDriveStraightPID(10)
         self.diagnostics = commands.Diagnostics()
         self.disaDisableTalons = commands.DisaDisableTalons()
 

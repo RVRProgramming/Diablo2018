@@ -31,13 +31,13 @@ class AutoMotionProfiling(Command):
     
         driveBase.l1.configNominalOutputForward(robotMap.minEffort, robotMap.ctreTimeout)
         driveBase.l1.configNominalOutputReverse(-robotMap.minEffort, robotMap.ctreTimeout)
-        driveBase.l1.configPeakOutputForward(robotMap.maxEffort, robotMap.ctreTimeout)
-        driveBase.l1.configPeakOutputReverse(-robotMap.maxEffort, robotMap.ctreTimeout)
+        driveBase.l1.configPeakOutputForward(robotMap.maxStartEffort, robotMap.ctreTimeout)
+        driveBase.l1.configPeakOutputReverse(-robotMap.maxStartEffort, robotMap.ctreTimeout)
         
         driveBase.r1.configNominalOutputForward(robotMap.minEffort, robotMap.ctreTimeout)
         driveBase.r1.configNominalOutputReverse(-robotMap.minEffort, robotMap.ctreTimeout)
-        driveBase.r1.configPeakOutputForward(robotMap.maxEffort, robotMap.ctreTimeout)
-        driveBase.r1.configPeakOutputReverse(-robotMap.maxEffort, robotMap.ctreTimeout)
+        driveBase.r1.configPeakOutputForward(robotMap.maxStartEffort, robotMap.ctreTimeout)
+        driveBase.r1.configPeakOutputReverse(-robotMap.maxStartEffort, robotMap.ctreTimeout)
         
         driveBase.l1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowableError, robotMap.ctreTimeout)
         driveBase.r1.configAllowableClosedloopError(robotMap.PIDSlot, robotMap.allowableError, robotMap.ctreTimeout)

@@ -124,10 +124,10 @@ class DriveBase(Subsystem):
         self.r1.set(ControlMode.Position, position)
         
     def getLeftError(self):
-        self.l1.getClosedLoopError(0)
+        return self.l1.getClosedLoopError(0)
         
     def getRightError(self):
-        self.r1.getClosedLoopError(0)
+        return self.r1.getClosedLoopError(0)
 
 
 driveBase = DriveBase()
