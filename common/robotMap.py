@@ -47,6 +47,9 @@ grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
 # Constants
 grabberSpeed = 0.33
+accumSpeed = 1
+maxAccum = 1024
+minAccum = 0
 
 ############
 # Elevator #

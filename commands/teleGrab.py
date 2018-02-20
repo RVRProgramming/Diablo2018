@@ -13,17 +13,18 @@ class TeleGrab(Command):
         # Ensure exclusive access to the Grabber while running.
         self.requires(grabber)
         
-    def execute(self):
+    def initialize(self):
+        grabber.startPID()
+        self.position = 0
         
-        # Open grabber if open button is exclusively pressed.
-        if oi.getGrabberOpen() and not oi.getGrabberClose():
-            grabber.grab(robotMap.grabberSpeed)
-        # Close grabber if close button is exclusively pressed.
-        elif oi.getGrabberClose() and not oi.getGrabberOpen():
-            grabber.grab(-robotMap.grabberSpeed)
-        # Otherwise, set the Grabber to stop.
-        else:
-            grabber.grab(0)
+    def execute(self):
+        if oi.getGrabberOpen() and self.position < robotMap.maxAccum:
+            self.position += robotMap.accumSpeed
+            
+        if oi.getGrabberClose() and self.position > robotMap.minAccum:
+            self.position -= robotMap.accumSpeed
+            
+        grabber.grab(self.position)
                 
     def isFinished(self):
         # TeleGrab never finishes.
@@ -31,5 +32,5 @@ class TeleGrab(Command):
 
     def interrupted(self):
         # In case of an interruption, stop grab motors.
-        grabber.grab(0)
+        grabber.stopPID()
 
