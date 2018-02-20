@@ -19,6 +19,7 @@ class AutoDriveStraightPID(Command):
         driveBase.l1.selectProfileSlot(robotMap.PIDSlot, 0)
         driveBase.l1.config_kF(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         driveBase.l1.config_kP(robotMap.PIDSlot, 0.2075, robotMap.ctreTimeout)
+        driveBase.l1.config_kD(robotMap.PIDSlot, 0.01, robotMap.ctreTimeout)
         driveBase.l1.config_kI(robotMap.PIDSlot, 0, robotMap.ctreTimeout)
         
         driveBase.r1.selectProfileSlot(robotMap.PIDSlot, 0)
