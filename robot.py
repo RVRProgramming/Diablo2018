@@ -1,5 +1,6 @@
 from commandbased import CommandBasedRobot
 import wpilib
+from commands.teleGrabBasic import TeleGrabBasic
 
 
 class MyRobot(CommandBasedRobot):
@@ -15,6 +16,7 @@ class MyRobot(CommandBasedRobot):
         self.autoDriveStraightPID = commands.AutoDriveStraightPID(10)
         self.diagnostics = commands.Diagnostics()
         self.disaDisableTalons = commands.DisaDisableTalons()
+        self.teleGrabBasic = commands.TeleGrabBasic()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -47,14 +49,14 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        self.teleGrab.start()
+        self.teleGrabBasic.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
     def teleopPeriodic(self):
         super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
-        self.autoRestartCommand(self.teleGrab)
+        self.autoRestartCommand(self.teleGrabBasic)
         self.autoRestartCommand(self.teleElevate)
     
     # This runs at the beginning of testing.
