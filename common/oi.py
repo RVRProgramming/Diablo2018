@@ -37,5 +37,7 @@ class OI:
     def getElevatorSpeed(self):
         return self.joystick.getRawAxis(robotMap.elevatorStick) * robotMap.elevatorMaxSpeed
 
+    def getElevatorOverride(self):
+        return self.joystick.getRawButton(robotMap.elevatorOverride)
             
 oi = OI()

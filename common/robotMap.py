@@ -55,9 +55,12 @@ minAccum = 0
 # Elevator #
 ############
 # Motors
-elevatorMotor1 = 2            # This is a PLACEHOLDER
-elevatorMotor2 = 3            # This is a PLACEHOLDER
+elevatorMotor1 = 5            # This is a PLACEHOLDER
+elevatorMotor2 = 6            # This is a PLACEHOLDER
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis
+elevatorOverride = 15         # This is a PLACEHOLDER
 # Constants
 elevatorMaxSpeed = 1
+elevatorMaxHeight = 3096      # This is a PLACEHOLDER
+elevatorMinHeight = 0

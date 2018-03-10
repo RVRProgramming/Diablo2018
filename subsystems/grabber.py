@@ -44,10 +44,10 @@ class Grabber(Subsystem):
         self.rightArmController.disable()
 
     def getLeftEncoder(self):
-        return self.leftArmEncoder.getDistance()
+        return self.leftArmEncoder.get()
     
     def getRightEncoder(self):
-        return self.rightArmEncoder.getDistance()
+        return self.rightArmEncoder.get()
     
     def diagnosticsToSmartDash(self):
         SmartDashboard.putNumber("Left Arm Encoder", self.getLeftEncoder())

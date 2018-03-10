@@ -2,6 +2,7 @@ from wpilib.command.command import Command
 
 from common.oi import oi
 from subsystems.elevator import elevator
+from common import robotMap
 
 
 class TeleElevate(Command):
@@ -13,8 +14,15 @@ class TeleElevate(Command):
         self.requires(elevator)
         
     def execute(self):
-        # Set Elevator speed to the elevator joystick value
-        elevator.elevate(oi.getElevatorSpeed())
+        # Set Elevator speed
+        if oi.getElevatorSpeed() > 0 and elevator.getPosition() < robotMap.elevatorMaxHeight:
+            elevator.elevate(oi.getElevatorSpeed())
+        elif oi.getElevatorSpeed() < 0 and elevator.getPosition() > robotMap.elevatorMinHeight:
+            elevator.elevate(oi.getElevatorSpeed())
+        elif oi.getElevatorOverride():
+            elevator.elevate(oi.getElevatorSpeed())
+        else:
+            elevator.elevate(0)
                 
     def isFinished(self):
         # TeleElevate never finishes.
