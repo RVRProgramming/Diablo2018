@@ -46,8 +46,8 @@ rightArmMotor = 1             # This is a PLACEHOLDER
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
 # Constants
-grabberSpeed = 0.33
-accumSpeed = 1
+grabberSpeed = 0.5
+accumSpeed = 50
 maxAccum = 1024
 minAccum = 0
 

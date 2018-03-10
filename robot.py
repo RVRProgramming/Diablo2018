@@ -1,7 +1,5 @@
 from commandbased import CommandBasedRobot
 import wpilib
-from commands.teleGrabBasic import TeleGrabBasic
-
 
 class MyRobot(CommandBasedRobot):
 
@@ -49,7 +47,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        self.teleGrabBasic.start()
+        self.teleGrab.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
@@ -61,12 +59,12 @@ class MyRobot(CommandBasedRobot):
     
     # This runs at the beginning of testing.
     def testInit(self):
-        super().testInit()
+        self.teleGrabBasic.start()
     
     # This runs in a loop throughout testing.
     def testPeriodic(self):
-        super().testPeriodic()
-        pass
+        super().commandPeriodic()
+        self.autoRestartCommand(self.teleGrabBasic)
     
     # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
