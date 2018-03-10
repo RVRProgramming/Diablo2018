@@ -15,6 +15,8 @@ class Elevator(Subsystem):
         self.elevatorMotor1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.elevatorMotor1)
         self.elevatorMotor2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.elevatorMotor2)
         
+        self.elevatorEncoder.reset()
+        
     def elevate(self, speed):
         # Set elevation speed.
         self.elevatorMotor1.set(speed)
