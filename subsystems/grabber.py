@@ -49,6 +49,10 @@ class Grabber(Subsystem):
     def getRightEncoder(self):
         return self.rightArmEncoder.get()
     
+    def resetEncoders(self):
+        self.leftArmEncoder.reset()
+        self.rightArmEncoder.reset()
+    
     def diagnosticsToSmartDash(self):
         SmartDashboard.putNumber("Left Arm Encoder", self.getLeftEncoder())
         SmartDashboard.putNumber("Right Arm Encoder", self.getRightEncoder())
@@ -56,8 +60,14 @@ class Grabber(Subsystem):
         SmartDashboard.putNumber("Left Arm Effort", self.leftArmMotor.getSpeed())
         SmartDashboard.putNumber("Right Arm Effort", self.rightArmMotor.getSpeed())
         
-    def openSimple(self, direction):
-        self.leftArmMotor.set(robotMap.grabberSpeed * direction)
-        self.rightArmMotor.set(-robotMap.grabberSpeed * direction)
+    def openSimple(self, directionLeft, directionRight):
+        self.leftArmMotor.set(robotMap.grabberSpeed * directionLeft * 0.95)
+        self.rightArmMotor.set(-robotMap.grabberSpeed * directionRight * 1)
+        
+    def openLeft(self, direction):
+        self.leftArmMotor.set(direction)
+        
+    def openRight(self, direction):
+        self.rightArmMotor.set(direction)
 
 grabber = Grabber()

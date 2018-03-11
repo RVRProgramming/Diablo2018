@@ -13,15 +13,20 @@ class TeleGrabBasic(Command):
         # Ensure exclusive access to the Grabber while running.
         self.requires(grabber)
         
+    def initialize(self):
+        grabber.resetEncoders()
+        
     def execute(self):
         if oi.getGrabberOpen():
-            grabber.openSimple(-1)
+            grabber.openLeft(-1)
+            grabber.openRight(-1)
             
         if oi.getGrabberClose():
-            grabber.openSimple(1)
+            grabber.openLeft(1)
+            grabber.openRight(1)
             
         if not oi.getGrabberClose() and not oi.getGrabberOpen():
-            grabber.openSimple(0)
+            grabber.openSimple(0, 0)
                 
     def isFinished(self):
         # TeleGrab never finishes.

@@ -50,6 +50,8 @@ grabberSpeed = 0.5
 accumSpeed = 50
 maxAccum = 1024
 minAccum = 0
+grabberMaxPosition = 4000
+grabberMinPosition = -150
 
 ############
 # Elevator #
@@ -59,8 +61,8 @@ elevatorMotor1 = 5            # This is a PLACEHOLDER
 elevatorMotor2 = 6            # This is a PLACEHOLDER
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis
-elevatorOverride = 15         # This is a PLACEHOLDER
+elevatorOverride = 8         
 # Constants
 elevatorMaxSpeed = 1
 elevatorMaxHeight = 3096      # This is a PLACEHOLDER
-elevatorMinHeight = 0
+elevatorMinHeight = -256

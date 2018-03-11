@@ -3,6 +3,7 @@ import wpilib
 from wpilib.command.subsystem import Subsystem
 
 from common import robotMap
+from wpilib.smartdashboard import SmartDashboard
 
 
 class Elevator(Subsystem):
@@ -24,5 +25,10 @@ class Elevator(Subsystem):
         
     def getPosition(self):
         return self.elevatorEncoder.get()
+    
+    def resetEncoder(self):
+        self.elevatorEncoder.reset()
 
+    def diagnosticsToSmartDash(self):
+        SmartDashboard.putNumber("Elevator Encoder", self.getPosition())
 elevator = Elevator()
