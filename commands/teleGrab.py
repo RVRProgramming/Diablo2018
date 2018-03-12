@@ -1,3 +1,5 @@
+import time
+
 from wpilib.command.command import Command
 
 from common import robotMap
@@ -14,17 +16,47 @@ class TeleGrab(Command):
         self.requires(grabber)
         
     def initialize(self):
-        grabber.startPID()
+        grabber.resetEncoders()
         self.position = 0
+        self.lastTime = self.getCurrentTime()
         
     def execute(self):
-        if oi.getGrabberOpen() and self.position < robotMap.maxAccum:
-            self.position += robotMap.accumSpeed
+        timeDiff = self.getCurrentTime() - self.lastTime
+        self.lastTime = self.getCurrentTime()
+        if (not oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
+            if oi.getGrabberOpen():
+                self.position += self.getPosAmount(timeDiff)
+                self.position = robotMap.grabberMaxPosition if self.position > robotMap.grabberMaxPosition else self.position
+            if oi.getGrabberClose():
+                self.position -= self.getPosAmount(timeDiff)
+                self.position = robotMap.grabberMinPosition if self.position < robotMap.grabberMinPosition else self.position
+        else:
+            pass
+        
+        leftError = self.position - grabber.getLeftEncoder()
+        if leftError < 100:
+            grabber.openLeft(0)
+        elif leftError > robotMap.grabberMaxError:
+            grabber.openLeft(robotMap.grabberSpeed)
+        elif leftError > 100 and left
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
+            #SEAN WAS HERE
             
-        if oi.getGrabberClose() and self.position > robotMap.minAccum:
-            self.position -= robotMap.accumSpeed
-            
-        grabber.grab(self.position)
                 
     def isFinished(self):
         # TeleGrab never finishes.
@@ -32,5 +64,11 @@ class TeleGrab(Command):
 
     def interrupted(self):
         # In case of an interruption, stop grab motors.
-        grabber.stopPID()
+        grabber.openSimple(0)
 
+    def getCurrentTime(self):
+        return int(time.time() * 1000)
+    
+    def getPosAmount(self, time):
+        return (robotMap.grabberMaxPosition/robotMap.grabberOpenTime) * time
+    

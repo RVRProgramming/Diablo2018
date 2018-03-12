@@ -50,8 +50,11 @@ grabberSpeed = 0.5
 accumSpeed = 50
 maxAccum = 1024
 minAccum = 0
-grabberMaxPosition = 4000
-grabberMinPosition = -150
+grabberMaxPosition = 4000     # This is a PLACEHOLDER
+grabberZeroPosition = 0
+grabberMinPosition = -100
+grabberOpenTime = 2
+grabberMaxError = 1500
 
 ############
 # Elevator #

@@ -19,30 +19,7 @@ class Grabber(Subsystem):
         
         self.leftArmEncoder.reset()
         self.rightArmEncoder.reset()
-        
-        self.leftArmController = wpilib.PIDController(0.01, 0, 0, self.leftArmEncoder, self.leftArmMotor)
-        self.rightArmController = wpilib.PIDController(0.01, 0, 0, self.rightArmEncoder, self.rightArmMotor)
-        
-        self.leftArmController.setInputRange(robotMap.minAccum, robotMap.maxAccum)
-        self.leftArmController.setOutputRange(-robotMap.grabberSpeed, robotMap.grabberSpeed)
-        self.rightArmController.setInputRange(robotMap.minAccum, robotMap.maxAccum)
-        self.rightArmController.setOutputRange(-robotMap.grabberSpeed, robotMap.grabberSpeed)
-        
-        self.stopPID()
-        
-    def grab(self, setpoint):
-        # Set grabbing setpoint.
-        self.leftArmController.setSetpoint(setpoint)
-        self.rightArmController.setSetpoint(setpoint)
-        
-    def startPID(self):
-        self.leftArmController.enable()
-        self.rightArmController.enable()
-        
-    def stopPID(self):
-        self.leftArmController.disable()
-        self.rightArmController.disable()
-
+              
     def getLeftEncoder(self):
         return self.leftArmEncoder.get()
     
@@ -56,18 +33,17 @@ class Grabber(Subsystem):
     def diagnosticsToSmartDash(self):
         SmartDashboard.putNumber("Left Arm Encoder", self.getLeftEncoder())
         SmartDashboard.putNumber("Right Arm Encoder", self.getRightEncoder())
-        SmartDashboard.putNumber("Grabber Setpoint", self.leftArmController.getSetpoint())
         SmartDashboard.putNumber("Left Arm Effort", self.leftArmMotor.getSpeed())
         SmartDashboard.putNumber("Right Arm Effort", self.rightArmMotor.getSpeed())
         
-    def openSimple(self, directionLeft, directionRight):
-        self.leftArmMotor.set(robotMap.grabberSpeed * directionLeft * 0.95)
-        self.rightArmMotor.set(-robotMap.grabberSpeed * directionRight * 1)
+    def openSimple(self, speed):
+        self.leftArmMotor.set(robotMap.grabberSpeed * speed)
+        self.rightArmMotor.set(-robotMap.grabberSpeed * speed)
         
-    def openLeft(self, direction):
-        self.leftArmMotor.set(direction)
+    def openLeft(self, speed):
+        self.leftArmMotor.set(speed)
         
-    def openRight(self, direction):
-        self.rightArmMotor.set(direction)
+    def openRight(self, speed):
+        self.rightArmMotor.set(-speed)
 
 grabber = Grabber()
