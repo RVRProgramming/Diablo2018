@@ -39,24 +39,7 @@ class TeleGrab(Command):
         elif leftError > robotMap.grabberMaxError:
             grabber.openLeft(robotMap.grabberSpeed)
         elif leftError > 100 and left
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            #SEAN WAS HERE
-            
+
                 
     def isFinished(self):
         # TeleGrab never finishes.

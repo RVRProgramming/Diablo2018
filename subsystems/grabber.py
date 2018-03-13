@@ -11,8 +11,8 @@ class Grabber(Subsystem):
         super().__init__()
         
         # Initialize motors.
-        self.leftArmMotor = wpilib.Spark(robotMap.leftArmMotor)
-        self.rightArmMotor = wpilib.Spark(robotMap.rightArmMotor)
+        self.leftArmMotor = wpilib.Spark(robotMap.grabberLeftMotor)
+        self.rightArmMotor = wpilib.Spark(robotMap.grabberRightMotor)
         
         self.leftArmEncoder = wpilib.Encoder(0, 1, False, wpilib.Encoder.EncodingType.k1X)
         self.rightArmEncoder = wpilib.Encoder(2, 3, False, wpilib.Encoder.EncodingType.k1X)

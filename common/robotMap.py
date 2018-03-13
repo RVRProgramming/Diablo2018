@@ -7,6 +7,9 @@ gamepad = 1
 ##############
 # Drive Base #
 ##############
+
+# DEAR FUTURE AIDAN: For the love of all god please make these variables drive naming specific. These are terrible. Sincerely, Aidan from 3/12/2018
+
 # Motors
 left1 = 2
 left2 = 4
@@ -40,32 +43,29 @@ mpDeadband = 0.01
 # Grabber #
 ###########
 # Motors
-leftArmMotor = 0              # This is a PLACEHOLDER
-rightArmMotor = 1             # This is a PLACEHOLDER
+grabberLeftMotor = 0          # This is a PLACEHOLDER
+grabberRightMotor = 1         # This is a PLACEHOLDER
 # Axes and Buttons
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
 # Constants
-grabberSpeed = 0.5
-accumSpeed = 50
-maxAccum = 1024
-minAccum = 0
+grabberSpeed = 0.5            # This is a PLACEHOLDER
 grabberMaxPosition = 4000     # This is a PLACEHOLDER
 grabberZeroPosition = 0
 grabberMinPosition = -100
-grabberOpenTime = 2
-grabberMaxError = 1500
+grabberOpenTime = 2           # This is a PLACEHOLDER
+grabberMaxError = 1500        # This is a PLACEHOLDER
 
 ############
 # Elevator #
 ############
 # Motors
-elevatorMotor1 = 5            # This is a PLACEHOLDER
-elevatorMotor2 = 6            # This is a PLACEHOLDER
+elevatorMotor1 = 5
+elevatorMotor2 = 6
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis
 elevatorOverride = 8         
 # Constants
 elevatorMaxSpeed = 1
 elevatorMaxHeight = 3096      # This is a PLACEHOLDER
-elevatorMinHeight = -256
+elevatorMinHeight = -100
