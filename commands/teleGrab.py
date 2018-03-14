@@ -5,7 +5,6 @@ from wpilib.command.command import Command
 from common import robotMap
 from common.oi import oi
 from subsystems.grabber import grabber
-from common.robotMap import rightDriveStick
 
 
 class TeleGrab(Command):
@@ -31,8 +30,6 @@ class TeleGrab(Command):
             if oi.getGrabberClose():
                 self.position -= self.getPosAmount(timeDiff)
                 self.position = robotMap.grabberMinPosition if self.position < robotMap.grabberMinPosition else self.position
-        else:
-            pass
         
         leftError = self.position - grabber.getLeftEncoder()
         leftDirection = -1 if leftError < 1 else 1
