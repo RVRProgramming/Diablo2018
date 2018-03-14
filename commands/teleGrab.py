@@ -22,9 +22,6 @@ class TeleGrab(Command):
         self.lastTime = self.getCurrentTime()
         
     def execute(self):
-        leftDirection = 1
-        rightDirection = 1
-        
         timeDiff = self.getCurrentTime() - self.lastTime
         self.lastTime = self.getCurrentTime()
         if (not oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
