@@ -1,5 +1,6 @@
 from commandbased import CommandBasedRobot
 import wpilib
+from common import robotMap
 
 class MyRobot(CommandBasedRobot):
 
@@ -47,30 +48,33 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        self.teleGrab.start()
+        self.teleGrabBasic.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
     def teleopPeriodic(self):
         super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
-        self.autoRestartCommand(self.teleGrabBasic)
         self.autoRestartCommand(self.teleElevate)
-    
-    # This runs at the beginning of testing.
-    def testInit(self):
-        self.teleGrabBasic.start()
-    
-    # This runs in a loop throughout testing.
-    def testPeriodic(self):
-        super().commandPeriodic()
-        self.autoRestartCommand(self.teleGrabBasic)
+#         if robotMap.grabberMode == 1 and self.teleGrab.isRunning():
+#             self.autoStopCommand(self.teleGrab)
+#             self.teleGrabBasic.start()
+#         elif robotMap.grabberMode == 0 and self.teleGrabBasic.isRunning():
+#             self.autoStopCommand(self.teleGrabBasic)
+# 
+#         if robotMap.grabberMode == 1 and not self.teleGrabBasic.isRunning():
+#             self.teleGrabBasic.start()
+#         elif robotMap.grabberMode == 0 and not self.teleGrab.isRunning():
+#             self.teleGrab.start()
     
     # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
         if not command.isRunning():
             command.start()
 
+    def autoStopCommand(self, command):
+        if command.isRunning():
+            command.stop()
 
 # Proprietary robotpy nonsense.
 if __name__ == "__main__":

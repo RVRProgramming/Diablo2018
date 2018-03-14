@@ -40,4 +40,7 @@ class OI:
     def getElevatorOverride(self):
         return self.joystick.getRawButton(robotMap.elevatorOverride)
             
+    def getGrabberOverride(self):
+        return self.joystick.getRawButton(robotMap.grabberOverride)        
+            
 oi = OI()

@@ -1,6 +1,7 @@
 import time
 
 from wpilib.command.command import Command
+from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
 from common.oi import oi
@@ -19,17 +20,20 @@ class TeleGrab(Command):
         grabber.resetEncoders()
         self.position = 0
         self.lastTime = self.getCurrentTime()
+        self.stopToggle = False
         
     def execute(self):
         timeDiff = self.getCurrentTime() - self.lastTime
         self.lastTime = self.getCurrentTime()
-        if (not oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
+        if not (oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
             if oi.getGrabberOpen():
                 self.position += self.getPosAmount(timeDiff)
                 self.position = robotMap.grabberMaxPosition if self.position > robotMap.grabberMaxPosition else self.position
             if oi.getGrabberClose():
                 self.position -= self.getPosAmount(timeDiff)
                 self.position = robotMap.grabberMinPosition if self.position < robotMap.grabberMinPosition else self.position
+        
+        SmartDashboard.putNumber("Grabber Position", self.position)
         
         leftError = self.position - grabber.getLeftEncoder()
         leftDirection = -1 if leftError < 1 else 1
@@ -54,11 +58,18 @@ class TeleGrab(Command):
             grabber.openLeft(self.getSpeedAmount(rightError)*rightDirection)
                 
     def isFinished(self):
-        # TeleGrab never finishes.
-        return False
+        if not oi.getGrabberOverride:
+            self.stopToggle = True
+            
+        if self.stopToggle: 
+            return oi.getGrabberOverride()
+        else:
+            return False
+    
+    def end(self):
+        robotMap.grabberMode = 1
 
     def interrupted(self):
-        # In case of an interruption, stop grab motors.
         grabber.openSimple(0)
 
     def getCurrentTime(self):

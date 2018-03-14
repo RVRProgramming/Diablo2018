@@ -14,8 +14,8 @@ class Grabber(Subsystem):
         self.leftArmMotor = wpilib.Spark(robotMap.grabberLeftMotor)
         self.rightArmMotor = wpilib.Spark(robotMap.grabberRightMotor)
         
-        self.leftArmEncoder = wpilib.Encoder(0, 1, False, wpilib.Encoder.EncodingType.k1X)
-        self.rightArmEncoder = wpilib.Encoder(2, 3, False, wpilib.Encoder.EncodingType.k1X)
+        self.leftArmEncoder = wpilib.Encoder(2, 3, False, wpilib.Encoder.EncodingType.k1X)
+        self.rightArmEncoder = wpilib.Encoder(0, 1, False, wpilib.Encoder.EncodingType.k1X)
         
         self.leftArmEncoder.reset()
         self.rightArmEncoder.reset()
@@ -24,7 +24,7 @@ class Grabber(Subsystem):
         return self.leftArmEncoder.get()
     
     def getRightEncoder(self):
-        return self.rightArmEncoder.get()
+        return int(self.rightArmEncoder.get()/-2)
     
     def resetEncoders(self):
         self.leftArmEncoder.reset()
@@ -37,13 +37,13 @@ class Grabber(Subsystem):
         SmartDashboard.putNumber("Right Arm Effort", self.rightArmMotor.getSpeed())
         
     def openSimple(self, speed):
-        self.leftArmMotor.set(robotMap.grabberSpeed * speed)
-        self.rightArmMotor.set(-robotMap.grabberSpeed * speed)
+        self.leftArmMotor.set(-robotMap.grabberMaxSpeed * speed)
+        self.rightArmMotor.set(robotMap.grabberMaxSpeed * speed)
         
     def openLeft(self, speed):
-        self.leftArmMotor.set(speed)
+        self.leftArmMotor.set(-speed)
         
     def openRight(self, speed):
-        self.rightArmMotor.set(-speed)
+        self.rightArmMotor.set(speed)
 
 grabber = Grabber()

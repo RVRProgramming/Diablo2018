@@ -48,15 +48,17 @@ grabberRightMotor = 1         # This is a PLACEHOLDER
 # Axes and Buttons
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
+grabberOverride = 7
 # Constants
-grabberMaxSpeed = 0.75        # This is a PLACEHOLDER
-grabberMinSpeed = 0.33
-grabberMaxPosition = 4000     # This is a PLACEHOLDER
+grabberMaxSpeed = 1        # This is a PLACEHOLDER
+grabberMinSpeed = 0.5        # This is a PLACEHOLDER
+grabberMaxPosition = 320      # This is a PLACEHOLDER
 grabberZeroPosition = 0
-grabberMinPosition = -100
-grabberErrorThreshold = 100
+grabberMinPosition = -20
+grabberErrorThreshold = 30
 grabberOpenTime = 2           # This is a PLACEHOLDER
-grabberMaxError = 1500        # This is a PLACEHOLDER
+grabberMaxError = 100        # This is a PLACEHOLDER
+grabberMode = 0
 
 ############
 # Elevator #
