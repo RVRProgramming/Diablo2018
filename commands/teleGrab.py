@@ -5,6 +5,7 @@ from wpilib.command.command import Command
 from common import robotMap
 from common.oi import oi
 from subsystems.grabber import grabber
+from common.robotMap import rightDriveStick
 
 
 class TeleGrab(Command):
@@ -21,6 +22,9 @@ class TeleGrab(Command):
         self.lastTime = self.getCurrentTime()
         
     def execute(self):
+        leftDirection = 1
+        rightDirection = 1
+        
         timeDiff = self.getCurrentTime() - self.lastTime
         self.lastTime = self.getCurrentTime()
         if (not oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
@@ -34,12 +38,26 @@ class TeleGrab(Command):
             pass
         
         leftError = self.position - grabber.getLeftEncoder()
-        if leftError < 100:
+        leftDirection = -1 if leftError < 1 else 1
+        leftError = abs(leftError)
+        
+        if leftError < robotMap.grabberErrorThreshold:
             grabber.openLeft(0)
         elif leftError > robotMap.grabberMaxError:
-            grabber.openLeft(robotMap.grabberSpeed)
-        elif leftError > 100 and left
-
+            grabber.openLeft(robotMap.grabberMaxSpeed*leftDirection)
+        elif leftError > robotMap.grabberErrorThreshold and leftError < robotMap.grabberMaxSpeed:
+            grabber.openLeft(self.getSpeedAmount(leftError)*leftDirection)
+            
+        rightError = self.position - grabber.getLeftEncoder()
+        rightDirection = -1 if rightError < 1 else 1
+        rightError = abs(rightError)
+        
+        if rightError < robotMap.grabberErrorThreshold:
+            grabber.openLeft(0)
+        elif rightError > robotMap.grabberMaxError:
+            grabber.openLeft(robotMap.grabberMaxSpeed*rightDirection)
+        elif rightError > robotMap.grabberErrorThreshold and rightError < robotMap.grabberMaxSpeed:
+            grabber.openLeft(self.getSpeedAmount(rightError)*rightDirection)
                 
     def isFinished(self):
         # TeleGrab never finishes.
@@ -54,4 +72,7 @@ class TeleGrab(Command):
     
     def getPosAmount(self, time):
         return (robotMap.grabberMaxPosition/robotMap.grabberOpenTime) * time
+    
+    def getSpeedAmount(self, error):
+        return ((robotMap.grabberMaxSpeed-robotMap.grabberMinSpeed)/robotMap.grabberMaxError) * error
     

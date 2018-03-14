@@ -49,10 +49,12 @@ grabberRightMotor = 1         # This is a PLACEHOLDER
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
 # Constants
-grabberSpeed = 0.5            # This is a PLACEHOLDER
+grabberMaxSpeed = 0.75        # This is a PLACEHOLDER
+grabberMinSpeed = 0.33
 grabberMaxPosition = 4000     # This is a PLACEHOLDER
 grabberZeroPosition = 0
 grabberMinPosition = -100
+grabberErrorThreshold = 100
 grabberOpenTime = 2           # This is a PLACEHOLDER
 grabberMaxError = 1500        # This is a PLACEHOLDER
 
