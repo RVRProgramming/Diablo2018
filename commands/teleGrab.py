@@ -1,9 +1,5 @@
-import time
-
 from wpilib.command.command import Command
-from wpilib.smartdashboard import SmartDashboard
 
-from common import robotMap
 from common.oi import oi
 from subsystems.grabber import grabber
 
@@ -17,67 +13,42 @@ class TeleGrab(Command):
         self.requires(grabber)
         
     def initialize(self):
-        grabber.resetEncoders()
-        self.position = 0
-        self.lastTime = self.getCurrentTime()
-        self.stopToggle = False
+        self.leftAmpTrigger = True
+        self.rightAmpTrigger = True
         
     def execute(self):
-        timeDiff = self.getCurrentTime() - self.lastTime
-        self.lastTime = self.getCurrentTime()
-        if not (oi.getGrabberOpen() and oi.getGrabberClose()) and (oi.getGrabberOpen() or oi.getGrabberClose()):
-            if oi.getGrabberOpen():
-                self.position += self.getPosAmount(timeDiff)
-                self.position = robotMap.grabberMaxPosition if self.position > robotMap.grabberMaxPosition else self.position
-            if oi.getGrabberClose():
-                self.position -= self.getPosAmount(timeDiff)
-                self.position = robotMap.grabberMinPosition if self.position < robotMap.grabberMinPosition else self.position
+        left = 0
+        right = 0
         
-        SmartDashboard.putNumber("Grabber Position", self.position)
-        
-        leftError = self.position - grabber.getLeftEncoder()
-        leftDirection = -1 if leftError < 1 else 1
-        leftError = abs(leftError)
-        
-        if leftError < robotMap.grabberErrorThreshold:
-            grabber.openLeft(0)
-        elif leftError > robotMap.grabberMaxError:
-            grabber.openLeft(robotMap.grabberMaxSpeed*leftDirection)
-        elif leftError > robotMap.grabberErrorThreshold and leftError < robotMap.grabberMaxSpeed:
-            grabber.openLeft(self.getSpeedAmount(leftError)*leftDirection)
+        if oi.getGrabberClose() and not oi.getGrabberOpen():
+            self.leftAmpTrigger = True
+            self.rightAmpTrigger = True
+            left = 1
+            right = 1
+        elif oi.getGrabberOpen() and not oi.getGrabberClose():
+            left = -1 if grabber.getLeftCurrent() < 15 and self.leftAmpTrigger else 0
+            right= -1 if grabber.getRightCurrent() < 15 and self.rightAmpTrigger else 0
             
-        rightError = self.position - grabber.getLeftEncoder()
-        rightDirection = -1 if rightError < 1 else 1
-        rightError = abs(rightError)
-        
-        if rightError < robotMap.grabberErrorThreshold:
-            grabber.openLeft(0)
-        elif rightError > robotMap.grabberMaxError:
-            grabber.openLeft(robotMap.grabberMaxSpeed*rightDirection)
-        elif rightError > robotMap.grabberErrorThreshold and rightError < robotMap.grabberMaxSpeed:
-            grabber.openLeft(self.getSpeedAmount(rightError)*rightDirection)
-                
-    def isFinished(self):
-        if not oi.getGrabberOverride:
-            self.stopToggle = True
+            if grabber.getLeftCurrent() > 15:
+                self.leftAmpTrigger = False
             
-        if self.stopToggle: 
-            return oi.getGrabberOverride()
+            if grabber.getRightCurrent() > 15:
+                self.rightAmpTrigger = False
         else:
-            return False
-    
-    def end(self):
-        robotMap.grabberMode = 1
-
-    def interrupted(self):
-        grabber.openSimple(0)
-
-    def getCurrentTime(self):
-        return int(time.time() * 1000)
-    
-    def getPosAmount(self, time):
-        return (robotMap.grabberMaxPosition/robotMap.grabberOpenTime) * time
-    
-    def getSpeedAmount(self, error):
-        return ((robotMap.grabberMaxSpeed-robotMap.grabberMinSpeed)/robotMap.grabberMaxError) * error
-    
+            left = 0
+            right = 0
+            
+        grabber.grab(left, right)
+        
+        
+        
+#         if oi.getGrabberClose():
+#             grabber.grab(1, 1)
+#         elif oi.getGrabberOpen():
+#             grabber.grab(-1, -1)
+#         else:
+#             grabber.grab(0, 0)
+            
+    def isFinished(self):
+        return False
+        

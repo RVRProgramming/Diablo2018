@@ -15,7 +15,6 @@ class MyRobot(CommandBasedRobot):
         self.autoDriveStraightPID = commands.AutoDriveStraightPID(10)
         self.diagnostics = commands.Diagnostics()
         self.disaDisableTalons = commands.DisaDisableTalons()
-        self.teleGrabBasic = commands.TeleGrabBasic()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -48,7 +47,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        self.teleGrabBasic.start()
+        self.teleGrab.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
@@ -56,25 +55,12 @@ class MyRobot(CommandBasedRobot):
         super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
         self.autoRestartCommand(self.teleElevate)
-#         if robotMap.grabberMode == 1 and self.teleGrab.isRunning():
-#             self.autoStopCommand(self.teleGrab)
-#             self.teleGrabBasic.start()
-#         elif robotMap.grabberMode == 0 and self.teleGrabBasic.isRunning():
-#             self.autoStopCommand(self.teleGrabBasic)
-# 
-#         if robotMap.grabberMode == 1 and not self.teleGrabBasic.isRunning():
-#             self.teleGrabBasic.start()
-#         elif robotMap.grabberMode == 0 and not self.teleGrab.isRunning():
-#             self.teleGrab.start()
+        self.autoRestartCommand(self.teleGrab)
     
     # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
         if not command.isRunning():
             command.start()
-
-    def autoStopCommand(self, command):
-        if command.isRunning():
-            command.stop()
 
 # Proprietary robotpy nonsense.
 if __name__ == "__main__":

@@ -13,37 +13,20 @@ class Grabber(Subsystem):
         # Initialize motors.
         self.leftArmMotor = wpilib.Spark(robotMap.grabberLeftMotor)
         self.rightArmMotor = wpilib.Spark(robotMap.grabberRightMotor)
-        
-        self.leftArmEncoder = wpilib.Encoder(2, 3, False, wpilib.Encoder.EncodingType.k1X)
-        self.rightArmEncoder = wpilib.Encoder(0, 1, False, wpilib.Encoder.EncodingType.k1X)
-        
-        self.leftArmEncoder.reset()
-        self.rightArmEncoder.reset()
-              
-    def getLeftEncoder(self):
-        return self.leftArmEncoder.get()
-    
-    def getRightEncoder(self):
-        return int(self.rightArmEncoder.get()/-2)
-    
-    def resetEncoders(self):
-        self.leftArmEncoder.reset()
-        self.rightArmEncoder.reset()
-    
-    def diagnosticsToSmartDash(self):
-        SmartDashboard.putNumber("Left Arm Encoder", self.getLeftEncoder())
-        SmartDashboard.putNumber("Right Arm Encoder", self.getRightEncoder())
-        SmartDashboard.putNumber("Left Arm Effort", self.leftArmMotor.getSpeed())
-        SmartDashboard.putNumber("Right Arm Effort", self.rightArmMotor.getSpeed())
-        
-    def openSimple(self, speed):
-        self.leftArmMotor.set(-robotMap.grabberMaxSpeed * speed)
-        self.rightArmMotor.set(robotMap.grabberMaxSpeed * speed)
-        
-    def openLeft(self, speed):
-        self.leftArmMotor.set(-speed)
-        
-    def openRight(self, speed):
-        self.rightArmMotor.set(speed)
+        self.PDP = wpilib.PowerDistributionPanel()             
 
+    def diagnosticsToSmartDash(self):
+        SmartDashboard.putNumber("Left Grabber Amperage", self.getLeftCurrent())
+        SmartDashboard.putNumber("Right Grabber Amperage", self.getRightCurrent())
+        
+    def grab(self, directionLeft, directionRight):
+        self.leftArmMotor.set(-robotMap.grabberSpeed * directionLeft)
+        self.rightArmMotor.set(robotMap.grabberSpeed * directionRight)
+        
+    def getLeftCurrent(self):
+        return self.PDP.getCurrent(11)
+    
+    def getRightCurrent(self):
+        return self.PDP.getCurrent(4)
+    
 grabber = Grabber()
