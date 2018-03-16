@@ -10,7 +10,7 @@ class Grabber(Subsystem):
     def __init__(self):
         super().__init__()
         
-        # Initialize motors.
+        # Initialize motors and PDP.
         self.leftArmMotor = wpilib.Spark(robotMap.grabberLeftMotor)
         self.rightArmMotor = wpilib.Spark(robotMap.grabberRightMotor)
         self.PDP = wpilib.PowerDistributionPanel()             
@@ -19,9 +19,9 @@ class Grabber(Subsystem):
         SmartDashboard.putNumber("Left Grabber Amperage", self.getLeftCurrent())
         SmartDashboard.putNumber("Right Grabber Amperage", self.getRightCurrent())
         
-    def grab(self, directionLeft, directionRight):
-        self.leftArmMotor.set(-robotMap.grabberSpeed * directionLeft)
-        self.rightArmMotor.set(robotMap.grabberSpeed * directionRight)
+    def grab(self, speedLeft, speedRight):
+        self.leftArmMotor.set(-robotMap.grabberSpeed * speedLeft)
+        self.rightArmMotor.set(robotMap.grabberSpeed * speedRight)
         
     def getLeftCurrent(self):
         return self.PDP.getCurrent(11)

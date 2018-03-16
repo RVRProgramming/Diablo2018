@@ -17,7 +17,7 @@ class TeleElevate(Command):
         elevator.resetEncoder()
         
     def execute(self):
-        # Set Elevator speed
+        # Set Elevator speed.
         if oi.getElevatorSpeed() > 0 and elevator.getPosition() < robotMap.elevatorMaxHeight:
             elevator.elevate(oi.getElevatorSpeed())
         elif oi.getElevatorSpeed() < 0 and elevator.getPosition() > robotMap.elevatorMinHeight:

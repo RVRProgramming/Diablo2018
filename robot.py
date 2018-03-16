@@ -1,6 +1,5 @@
 from commandbased import CommandBasedRobot
 import wpilib
-from common import robotMap
 
 class MyRobot(CommandBasedRobot):
 

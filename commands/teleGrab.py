@@ -39,16 +39,7 @@ class TeleGrab(Command):
             right = 0
             
         grabber.grab(left, right)
-        
-        
-        
-#         if oi.getGrabberClose():
-#             grabber.grab(1, 1)
-#         elif oi.getGrabberOpen():
-#             grabber.grab(-1, -1)
-#         else:
-#             grabber.grab(0, 0)
-            
+                    
     def isFinished(self):
         return False
         
