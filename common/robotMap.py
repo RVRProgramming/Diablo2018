@@ -34,17 +34,15 @@ maxEffort = 0.75
 maxRampEffort = 0.65
 minRampEffort = 0.1
 minEffort = 0
-allowableError = 250 * 0
-mpPeriod = 50
-mpDeadband = 0.01
+allowableError = 0
 
 
 ###########
 # Grabber #
 ###########
 # Motors
-grabberLeftMotor = 0          # This is a PLACEHOLDER
-grabberRightMotor = 1         # This is a PLACEHOLDER
+grabberLeftMotor = 0
+grabberRightMotor = 1
 # Axes and Buttons
 grabberOpen = 2               # Joystick: Thumb
 grabberClose = 1              # Joystick: Trigger
@@ -58,10 +56,11 @@ grabberSpeed = 1
 # Motors
 elevatorMotor1 = 5
 elevatorMotor2 = 6
+# PDP Ports
+elevatorPDPPort1 = 1          # PLACEHOLDER
+elevatorPDPPort2 = 2          # PLACEHOLDER
 # Axes and Buttons
-elevatorStick = 1             # Joystick: Y-Axis
-elevatorOverride = 8         
+elevatorStick = 1             # Joystick: Y-Axis      
 # Constants
 elevatorMaxSpeed = 1
-elevatorMaxHeight = 3096      # This is a PLACEHOLDER
-elevatorMinHeight = -100
+elevatorDeadzone = 0.2

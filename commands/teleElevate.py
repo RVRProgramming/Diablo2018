@@ -13,19 +13,12 @@ class TeleElevate(Command):
         # Ensure exclusive access to the Elevator while running.
         self.requires(elevator)
         
-    def initialize(self):
-        elevator.resetEncoder()
-        
     def execute(self):
         # Set Elevator speed.
-        if oi.getElevatorSpeed() > 0 and elevator.getPosition() < robotMap.elevatorMaxHeight:
-            elevator.elevate(oi.getElevatorSpeed())
-        elif oi.getElevatorSpeed() < 0 and elevator.getPosition() > robotMap.elevatorMinHeight:
-            elevator.elevate(oi.getElevatorSpeed())
-        elif oi.getElevatorOverride():
-            elevator.elevate(oi.getElevatorSpeed())
-        else:
+        if abs(oi.getElevatorSpeed()) < robotMap.elevatorDeadzone:
             elevator.elevate(0)
+        else:
+            elevator.elevate(oi.getElevatorSpeed() * robotMap.elevatorMaxSpeed)
                   
     def isFinished(self):
         # TeleElevate never finishes.

@@ -1,9 +1,9 @@
 import ctre
 import wpilib
 from wpilib.command.subsystem import Subsystem
+from wpilib.smartdashboard import SmartDashboard
 
 from common import robotMap
-from wpilib.smartdashboard import SmartDashboard
 
 
 class Elevator(Subsystem):
@@ -12,23 +12,20 @@ class Elevator(Subsystem):
         super().__init__()
         
         # Initialize motors.
-        self.elevatorEncoder = wpilib.Encoder(4, 5, False, wpilib.Encoder.EncodingType.k1X)
         self.elevatorMotor1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.elevatorMotor1)
         self.elevatorMotor2 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.elevatorMotor2)
         
-        self.elevatorEncoder.reset()
+        self.elevatorMotor2.follow(self.elevatorMotor1)
+        
+        self.PDP = wpilib.PowerDistributionPanel()
         
     def elevate(self, speed):
         # Set elevation speed.
         self.elevatorMotor1.set(speed)
-        self.elevatorMotor2.set(speed)
-        
-    def getPosition(self):
-        return self.elevatorEncoder.get()
-    
-    def resetEncoder(self):
-        self.elevatorEncoder.reset()
 
     def diagnosticsToSmartDash(self):
-        SmartDashboard.putNumber("Elevator Encoder", self.getPosition())
+        SmartDashboard.putNumber("Elevator Speed", self.elevatorMotor1.getMotorOutputPercent())
+        SmartDashboard.putNumber("Elevator Motor 1 Amperage", self.PDP.getCurrent(robotMap.elevatorPDPPort1))
+        SmartDashboard.putNumber("Elevator Motor 2 Amperage", self.PDP.getCurrent(robotMap.elevatorPDPPort2))
+
 elevator = Elevator()

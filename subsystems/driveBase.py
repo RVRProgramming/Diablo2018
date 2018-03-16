@@ -15,6 +15,7 @@ class DriveBase(Subsystem):
         super().__init__()
         # Initialize and calibrate the NavX-MXP.
         self.gyro = AHRS.create_spi(wpilib.SPI.Port.kMXP)
+        self.gyro.reset()
         
         # Initialize motors.
         self.l1 = ctre.wpi_talonsrx.WPI_TalonSRX(robotMap.left1)
@@ -72,21 +73,18 @@ class DriveBase(Subsystem):
         
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
-        self.maxRecordedLeftVelocity = self.getLeftVelocity() if self.getLeftVelocity() > self.maxRecordedLeftVelocity else self.maxRecordedLeftVelocity
-        self.maxRecordedRightVelocity = self.getRightVelocity() if self.getRightVelocity() > self.maxRecordedRightVelocity else self.maxRecordedRightVelocity
         
-        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / robotMap.countsPerRevolution)
-        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
-        SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
-        SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
-        SmartDashboard.putNumber("Max Left Velocity", self.maxRecordedLeftVelocity)
-        SmartDashboard.putNumber("Max Right Velocity", self.maxRecordedRightVelocity)
-        
+#         SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / robotMap.countsPerRevolution)
+#         SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
+#         SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
+#         SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
+         
         if RobotBase.isReal():
-            SmartDashboard.putNumber("Left Effort", self.l1.getMotorOutputPercent())
-            SmartDashboard.putNumber("Right Effort", self.r1.getMotorOutputPercent())
+            SmartDashboard.putNumber("Left Speed", self.l1.getMotorOutputPercent())
+            SmartDashboard.putNumber("Right Speed", self.r1.getMotorOutputPercent())
         
-        SmartDashboard.putNumber("NavX Angle", self.gyro.getAngle())
+        SmartDashboard.putNumber("Gyro Angle", self.gyro.getAngle())
+        SmartDashboard.putNumber("Barometric Pressure", self.gyro.getBarometricPressure())
 
     def drive(self, leftSpeed, rightSpeed):
         # Set drive speed.
