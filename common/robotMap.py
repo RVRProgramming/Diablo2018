@@ -11,17 +11,17 @@ gamepad = 1
 # DEAR FUTURE AIDAN: For the love of all god please make these variables drive naming specific. These are terrible. Sincerely, Aidan from 3/12/2018
 
 # Motors
-left1 = 2
+left1 = 1
 left2 = 4
-right1 = 1
+right1 = 2
 right2 = 3
 # Axes and Buttons
-leftDriveStick = 0            # Gamepad: Left Thumbstick
+leftDriveStick = 1            # Gamepad: Left Thumbstick
 rightDriveStick = 5           # Gamepad: Right Thumbstick
 slowDriveButton = 6           # Gamepad: Right Bumper
 # Constants
 maxTeleopDriveSpeed = 1
-slowDriveSpeed = 0.75
+slowDriveSpeed = 0.5
 ctreTimeout = 10
 peakCurrent = 45
 peakTime = 10000
@@ -57,7 +57,7 @@ grabberSpeed = 1
 elevatorMotor1 = 5
 elevatorMotor2 = 6
 # PDP Ports
-elevatorPDPPort1 = 1          # PLACEHOLDER
+elevatorPDPPort1 = 13          # PLACEHOLDER
 elevatorPDPPort2 = 2          # PLACEHOLDER
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis      

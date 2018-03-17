@@ -29,7 +29,7 @@ class TeleDrive(Command):
         
     def execute(self):
         # Set the drive speed.
-        driveBase.drive(oi.getLeftDrive() * oi.getDriveSpeedModifier(), oi.getRightDrive() * oi.getDriveSpeedModifier())
+        driveBase.drive(oi.getLeftDrive() * abs(oi.getLeftDrive()) * oi.getDriveSpeedModifier(), oi.getRightDrive() * abs(oi.getRightDrive()) * oi.getDriveSpeedModifier())
             
     def isFinished(self):
         # TeleDrive never finishes.

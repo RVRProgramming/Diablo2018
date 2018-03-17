@@ -11,9 +11,10 @@ class MyRobot(CommandBasedRobot):
         self.teleDrive = commands.TeleDrive()
         self.teleGrab = commands.TeleGrab()
         self.teleElevate = commands.TeleElevate()
-        self.autoDriveStraightPID = commands.AutoDriveStraightPID(10)
+        self.autoDriveStraightPID = commands.AutoDriveStraightPID(5)
         self.diagnostics = commands.Diagnostics()
         self.disaDisableTalons = commands.DisaDisableTalons()
+        #self.groupDriveStraight = commands.GroupDriveStraight()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -35,7 +36,7 @@ class MyRobot(CommandBasedRobot):
     # This runs at the beginning of autonomous.
     def autonomousInit(self):
         super().autonomousInit()
-        self.autoDriveStraightPID.start()
+        #self.groupDriveStraight.start()
         
     # This runs in a loop throughout autonomous.
     def autonomousPeriodic(self):

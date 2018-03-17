@@ -6,3 +6,5 @@ from .teleElevate import TeleElevate
 from .teleGrab import TeleGrab
 from .disaDisableTalons import DisaDisableTalons
 from .autoMotionProfiling import AutoMotionProfiling
+from .autoDriveStraightBasic import AutoDriveStraightBasic
+from .groupDriveStraight import GroupDriveStraight

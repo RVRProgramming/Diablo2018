@@ -71,11 +71,16 @@ class DriveBase(Subsystem):
         self.maxRecordedLeftVelocity = 0
         self.maxRecordedRightVelocity = 0
         
+        self.r1.configNeutralDeadband(0.1, 10)
+        self.r2.configNeutralDeadband(0.1, 10)
+        self.l1.configNeutralDeadband(0.1, 10)
+        self.l2.configNeutralDeadband(0.1, 10)
+        
     def diagnosticsToSmartDash(self):
         # Add position, velocity, and angle values to the SmartDash.
         
-#         SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / robotMap.countsPerRevolution)
-#         SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
+        SmartDashboard.putNumber("Left Encoder", self.getLeftPosition() / robotMap.countsPerRevolution)
+        SmartDashboard.putNumber("Right Encoder", self.getRightPosition() / robotMap.countsPerRevolution)
 #         SmartDashboard.putNumber("Left Velocity", self.getLeftVelocity())
 #         SmartDashboard.putNumber("Right Velocity", self.getRightVelocity())
          
