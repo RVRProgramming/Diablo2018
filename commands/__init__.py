@@ -8,3 +8,4 @@ from .disaDisableTalons import DisaDisableTalons
 from .autoMotionProfiling import AutoMotionProfiling
 from .autoDriveStraightBasic import AutoDriveStraightBasic
 from .groupDriveStraight import GroupDriveStraight
+from .autoDriveStraightNoGroup import AutoDriveStraightNoGroup

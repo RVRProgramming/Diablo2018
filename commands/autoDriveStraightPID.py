@@ -44,15 +44,16 @@ class AutoDriveStraightPID(Command):
     def execute(self):
         driveBase.positionPID(self.distance)
         if driveBase.getLeftPosition() < 1 * 4096:
+            #print(driveBase.getLeftPosition())
             driveBase.l1.configPeakOutputForward((robotMap.maxRampEffort * driveBase.getLeftPosition() / (1 * 4096)) + robotMap.minRampEffort, robotMap.ctreTimeout)
-            driveBase.l1.configPeakOutputReverse(-(robotMap.maxRampEffort * driveBase.getLeftPosition() / (1 * 4096)) + robotMap.minRampEffort, robotMap.ctreTimeout)
+            driveBase.l1.configPeakOutputReverse(-(robotMap.maxRampEffort * driveBase.getLeftPosition() / (1 * 4096)) - robotMap.minRampEffort, robotMap.ctreTimeout)
         else:
             driveBase.l1.configPeakOutputForward(robotMap.maxEffort, robotMap.ctreTimeout)
             driveBase.l1.configPeakOutputReverse(-robotMap.maxEffort, robotMap.ctreTimeout)
           
         if driveBase.getRightPosition() < 1 * 4096:
             driveBase.r1.configPeakOutputForward((robotMap.maxRampEffort * driveBase.getRightPosition() / (1 * 4096)) +robotMap.minRampEffort, robotMap.ctreTimeout)
-            driveBase.r1.configPeakOutputReverse(-(robotMap.maxRampEffort * driveBase.getRightPosition() / (1 * 4096)) +robotMap.minRampEffort, robotMap.ctreTimeout)
+            driveBase.r1.configPeakOutputReverse(-(robotMap.maxRampEffort * driveBase.getRightPosition() / (1 * 4096)) -robotMap.minRampEffort, robotMap.ctreTimeout)
         else:
             driveBase.r1.configPeakOutputForward(robotMap.maxEffort, robotMap.ctreTimeout)  
             driveBase.r1.configPeakOutputReverse(-robotMap.maxEffort, robotMap.ctreTimeout)

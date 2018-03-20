@@ -9,12 +9,13 @@ class MyRobot(CommandBasedRobot):
         # Import and initialize commands.
         import commands
         self.teleDrive = commands.TeleDrive()
-        self.teleGrab = commands.TeleGrab()
+        #self.teleGrab = commands.TeleGrab()
         self.teleElevate = commands.TeleElevate()
-        self.autoDriveStraightPID = commands.AutoDriveStraightPID(5)
+        self.autoDriveStraightPID = commands.AutoDriveStraightPID(5.5)
         self.diagnostics = commands.Diagnostics()
         self.disaDisableTalons = commands.DisaDisableTalons()
         #self.groupDriveStraight = commands.GroupDriveStraight()
+        self.autoNoGroup = commands.AutoDriveStraightNoGroup()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -36,7 +37,7 @@ class MyRobot(CommandBasedRobot):
     # This runs at the beginning of autonomous.
     def autonomousInit(self):
         super().autonomousInit()
-        #self.groupDriveStraight.start()
+        self.autoDriveStraightPID.start()
         
     # This runs in a loop throughout autonomous.
     def autonomousPeriodic(self):
@@ -47,7 +48,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        self.teleGrab.start()
+        #self.teleGrab.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
@@ -55,7 +56,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
         self.autoRestartCommand(self.teleElevate)
-        self.autoRestartCommand(self.teleGrab)
+        #self.autoRestartCommand(self.teleGrab)
     
     # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
