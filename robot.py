@@ -16,6 +16,7 @@ class MyRobot(CommandBasedRobot):
         self.disaDisableTalons = commands.DisaDisableTalons()
         #self.groupDriveStraight = commands.GroupDriveStraight()
         self.autoNoGroup = commands.AutoDriveStraightNoGroup()
+        self.teleClaw = commands.TeleClaw()
 
         # Start displaying SmartDash diagnostics.
         self.diagnostics.start()
@@ -48,7 +49,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopInit()
         # Start all teleop controls.
         self.teleDrive.start()
-        #self.teleGrab.start()
+        self.teleClaw.start()
         self.teleElevate.start()
         
     # This runs in a loop throughout teleop.
@@ -56,7 +57,7 @@ class MyRobot(CommandBasedRobot):
         super().teleopPeriodic()
         self.autoRestartCommand(self.teleDrive)
         self.autoRestartCommand(self.teleElevate)
-        #self.autoRestartCommand(self.teleGrab)
+        self.autoRestartCommand(self.teleClaw)
     
     # Starts up the command if it isn't already running.
     def autoRestartCommand(self, command):
