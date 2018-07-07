@@ -8,7 +8,7 @@ class PneumaticClaw(Subsystem):
     
     def __init__(self):
         super().__init__()
-        self.solenoid1 = wpilib.Solenoid(0)
+        self.solenoid1 = wpilib.Solenoid(robotMap.clawSolenoid)
     
     def grab(self, grab):
         self.solenoid1.set(grab)

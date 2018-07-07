@@ -68,7 +68,7 @@ class AutoDriveStraightPID(Command):
             
     def isFinished(self):
         # Return True if the velocity of both sides is less than 1 RPM and error is less than 250.
-        # This very possibly is broken. If it isnt, thats great!
+        # This is broken.
         # return True if abs((driveBase.getLeftVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 and abs((driveBase.getRightVelocity() * 10) / robotMap.countsPerRevolution) * 60 < 1 and abs(driveBase.getLeftError()) < robotMap.allowableError and abs(driveBase.getRightError()) < robotMap.allowableError else False
         return False
     

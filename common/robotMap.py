@@ -41,13 +41,11 @@ allowableError = 0
 # Grabber #
 ###########
 # Motors
-grabberLeftMotor = 0
-grabberRightMotor = 1
+clawSolenoid = 0
 # Axes and Buttons
-grabberOpen = 2               # Joystick: Thumb
-grabberClose = 1              # Joystick: Trigger
-# Constants
-grabberSpeed = 1
+clawOpen = 2               # Joystick: Thumb
+clawClose = 1              # Joystick: Trigger
+
 
 
 ############
@@ -57,8 +55,8 @@ grabberSpeed = 1
 elevatorMotor1 = 5
 elevatorMotor2 = 6
 # PDP Ports
-elevatorPDPPort1 = 13          # PLACEHOLDER
-elevatorPDPPort2 = 2          # PLACEHOLDER
+elevatorPDPPort1 = 13          
+elevatorPDPPort2 = 2          
 # Axes and Buttons
 elevatorStick = 1             # Joystick: Y-Axis      
 # Constants

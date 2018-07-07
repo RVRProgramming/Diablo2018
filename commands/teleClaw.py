@@ -16,9 +16,9 @@ class TeleClaw(Command):
         claw.grab(False)
         
     def execute(self):
-        if oi.getGrabberClose():
+        if oi.getClawClose():
             claw.grab(True)
-        elif oi.getGrabberOpen():
+        elif oi.getClawOpen():
             claw.grab(False)
                     
     def isFinished(self):

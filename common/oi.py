@@ -26,12 +26,12 @@ class OI:
             return robotMap.maxTeleopDriveSpeed
 
     # Returns whether or not to open the Grabber.
-    def getGrabberOpen(self):
-        return self.joystick.getRawButton(robotMap.grabberOpen)
+    def getClawOpen(self):
+        return self.joystick.getRawButton(robotMap.clawOpen)
     
     # Returns whether or not to close the Grabber.
-    def getGrabberClose(self):
-        return self.joystick.getRawButton(robotMap.grabberClose)
+    def getClawClose(self):
+        return self.joystick.getRawButton(robotMap.clawClose)
     
     # Returns the Elevator speed.
     def getElevatorSpeed(self):
