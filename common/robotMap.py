@@ -9,6 +9,7 @@ gamepad = 1
 ##############
 
 # DEAR FUTURE AIDAN: For the love of all god please make these variables drive naming specific. These are terrible. Sincerely, Aidan from 3/12/2018
+# DEAR MORE FUTURE AIDAN: Aidan from 7/7/2018 agrees with Aidan from 3/12/2818
 
 # Motors
 left1 = 1
