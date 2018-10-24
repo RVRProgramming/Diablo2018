@@ -1,0 +1,34 @@
+{
+	"pyfrc": {
+		"robot": {
+			"w": 3.6,
+			"h": 3,
+			"starting_x": 25,
+			"starting_y": 25,
+			"starting_angle": 180
+		},
+		"analog": {
+
+		},
+		"pwm": {
+			"1": "Left Arm Motor",
+			"2": "Right Arm Motor",
+			"3": "Elevator Motor 1",
+			"4": "Elevator Motor 2"
+		},
+		"CAN": {
+			"2": "Front Left Drive Motor",
+			"4": "Rear Left Drive Motor",
+			"1": "Front Right Drive Motor",
+			"3": "Rear Right Drive Motor"
+		},
+		"solenoid": {
+
+		},
+		"field": {
+			"w": 27,
+			"h": 27,
+			"px_per_ft": 10
+		}
+	}
+}
